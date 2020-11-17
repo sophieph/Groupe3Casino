@@ -56,3 +56,6 @@ class Niveau:
             return mise
         elif (nb_essai == 3):
             return mise/2
+    def update_nb_python():
+        self.nb_python = random.randrange(1, 10*level)
+
