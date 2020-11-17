@@ -11,20 +11,17 @@ class Niveau:
 
     def __init__(self, level, solde ):
         self.level = level
-        self.solde = solde
         self.nb_python = random.randrange(1, 10*level) 
-        self.nb_user = 0
-        self.mise = 0
-
+        
     def set_nb_user(nombre):
         if (nombre >=0 and nombre <= (self.level*10)):
             self.nb_user = nombre
             return True
         else :
-            return False
+            return False  
 
-    def set_mise(n, mise):
-        if(n <= self.solde):
+    def set_mise(n,  solde):
+        if(n <= solde):
             self.mise = n
             return True
         else :
