@@ -11,31 +11,22 @@ class Player:
     def __init__(self): # Notre méthode constructeur
         self.nom = ""
         self.solde_depart = 10
-        self.solde = ""
+        self.solde = 10
         self.level = 1
 
     #Methode qui set le nom du joueur
-    def setNom(self, nom):
+    def set_nom(self, nom):
         self.nom = nom
 
         return self.nom
 
     # Methode qui set le level du joueur
-    def setLevel(self, level):
+    def set_level(self, level):
         self.level = level
     
     # Methode qui set le solde de départ du joueur
-    def setSoldeDepart(self, solde):
-        error = "Le montant saisie n'est pas valide, solde minimum de 1€ requis : "
-        try:
-            solde = float(solde)
-            if solde < 1:
-                print(error)
-            else:
-                self.solde_depart = solde
-                self.solde = solde
-
-                return self.solde
-        except ValueError:
-            print(error)    
+    def set_solde(self, solde):
+        self.solde = solde
+        return solde
+        
 
