@@ -30,11 +30,11 @@ class Niveau:
                 return False
         else :
             return False
-  
+
     def nb_user_is_true(nombre, nb_user):
         return (nombre == nb_user)
-   
-    def mise_is_valid(mise, solde): 
+
+    def mise_is_valid(mise, solde):
         if (type(mise) == int):
             if (mise >=0 and mise <= solde):
                 return True
