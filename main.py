@@ -18,7 +18,6 @@ regle="- Je viens de penser à un nombre entre 1 et 10. Devinez lequel ?\n\
 - Dès que vous devinez mon nombre : vous avez le droit de quitter le jeu et de partir avec vos gains OU de continuer le jeu en passant au level supérieur."
 print(regle)
 solde = player.solde
-#faire appel fonction mise
 
 jeu = True
 

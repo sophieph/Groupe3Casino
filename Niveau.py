@@ -31,8 +31,8 @@ class Niveau:
         else :
             return False
 
-    def nb_user_is_true(nombre, nb_user):
-        return (nombre == nb_user)
+    def nb_user_is_true(nb_user):
+        return (self.nb_python == nb_user)
 
     def mise_is_valid(mise, solde):
         if (type(mise) == int):
@@ -47,5 +47,15 @@ class Niveau:
             return 3
         elif (self.level == 2):
             return 5
-        else if (self.level  == 3):
+        elif (self.level  == 3):
             return 7
+    def get_gain(mise, nb_essai):
+        if (nb_essai == 1):
+            return 2*mise
+        elif (nb_essai == 2):
+            return mise
+        elif (nb_essai == 3):
+            return mise/2
+    def update_nb_python():
+        self.nb_python = random.randrange(1, 10*level)
+
