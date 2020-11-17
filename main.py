@@ -1,8 +1,9 @@
 from Player import Player
 from Niveau import Niveau
 
+level=Niveau(1)
 name_user = input("Bonjour je suis Python. Quel est votre pseudo ? ")
-player = Player()
+player = Player(level)
 player.nom = name_user
 
 print ("Hello "+player.nom+", vous avez 10 €, Très bien ! Installez vous SVP à la table de pari.")
@@ -19,7 +20,7 @@ print(regle)
 player.solde_depart=10
 #faire appel fonction mise
 print("Le jeu commence, entrez votre mise : ? ")
-mise = player.setSoldeAvecMise
+mise = player.setSoldeAvecMise()
 
 nb_python = niveau.get_nb_python
 
