@@ -17,14 +17,14 @@ class Niveau:
         self.mise = 0
 
     def set_nb_user(nombre):
-        if (nombre >=0 and nombre <= (level*10)):
+        if (nombre >=0 and nombre <= (self.level*10)):
             self.nb_user = nombre
             return True
-        else 
+        else :
             return False
 
-    def set_mise(n):
-        if(n <= solde):
+    def set_mise(n, mise):
+        if(n <= self.solde):
             self.mise = n
             return True
         else :
