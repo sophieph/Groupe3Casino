@@ -1,5 +1,6 @@
-# Class User 
+import csv
 
+# Class User 
 class Player: 
     """Classe définissant un joueur caractérisée par :
     - son nom
@@ -23,10 +24,12 @@ class Player:
     # Methode qui set le level du joueur
     def set_level(self, level):
         self.level = level
+
+        return self.level
     
     # Methode qui set le solde de départ du joueur
     def set_solde(self, solde):
         self.solde = solde
         return solde
-        
+
 
