@@ -16,13 +16,13 @@ regle="- Je viens de penser à un nombre entre 1 et 10. Devinez lequel ?\n\
     - de retenter votre chance avec l'argent qu'il vous reste pour reconquérir le level perdu.\n\
     - de quitter le jeu.\n\
 - Dès que vous devinez mon nombre : vous avez le droit de quitter le jeu et de partir avec vos gains OU de continuer le jeu en passant au level supérieur."
-print(regle)
+#print(regle)
 solde = player.solde
 
 jeu = True
 
 while jeu:
-    nb_python = level.get_nb_python
+    nb_python = level.get_nb_python()
     nb_coup = level.get_nb_coup_max()
 
     mise = input("Le jeu commence, entrez votre mise : ? ")
