@@ -23,15 +23,15 @@ mise = player.setSoldeAvecMise
 
 nb_python = niveau.get_nb_python
 
-nb_user = int(input("Alors mon nombre est : ? " ))
-test = niveau.set_nb_user(nb_user)
+nb_user = input("Alors mon nombre est : ? " )
+test = niveau.nb_user_is_valid(nb_user)
 
 essaie = 1
 gain=10
 while essaie != 3 or nb_user!=nb_python:
 
     if test:
-        nb_user = niveau.nb_user_true()
+        nb_user = niveau.nb_user_is_true()
 
         if nb_user > nb_python:
             print("Votre nbre est trop grand !")
