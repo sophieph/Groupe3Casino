@@ -42,4 +42,10 @@ class Niveau:
                 return False
         else:
             return False
-
+    def get_nb_coup_max():
+        if(self.level == 1):
+            return 3
+        else if (self.level == 2):
+            return 5
+        else if (self.level  == 3):
+            return 7
