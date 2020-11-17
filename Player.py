@@ -4,14 +4,13 @@ class Player:
     """Classe définissant un joueur caractérisée par :
     - son nom
     - son solde de départ
-    - son solde de fin de jeu
+    - son solde actuel
     - son niveau maximum atteint pendant le jeu 
-    - son lieu de résidence"""
+    """
 
-    
     def __init__(self): # Notre méthode constructeur
         self.nom = ""
-        self.solde_depart = ""
+        self.solde_depart = 10
         self.solde = ""
         self.level = 1
 
@@ -39,29 +38,4 @@ class Player:
                 return self.solde
         except ValueError:
             print(error)    
-
-    # Methode qui retourne le solde selon la mise
-    def setSoldeAvecMise(self, mise):
-        mise_min = 0.01
-        try:
-            mise = float(mise)
-            if (mise < mise_min):
-                print(
-                    "Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et %.2f € :" % (self.solde))
-            elif mise > self.solde:
-                print("Erreur, votre mise est plus elevé que votre solde.\n")
-                print("Entrez une mise inférieur ou égale à %.2f € :" % (self.solde))
-            else: 
-                self.solde -= mise
-
-                return self.solde
-
-        except ValueError:
-            print("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et %.2f € : " % (self.solde))
-
-
-
-
-
-    
 
