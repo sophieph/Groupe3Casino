@@ -20,59 +20,68 @@ print(regle)
 solde = player.solde
 #faire appel fonction mise
 
-mise = input("Le jeu commence, entrez votre mise : ? ")
-while ( not level.mise_is_valid(mise, solde):
-    mise = input("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et 10 € :  ? ")
-
-player.add_mise(mise)
-
-nb_python = level.get_nb_python
-
-nb_user = input("Alors mon nombre est : ? " )
-test = level.nb_user_is_valid(nb_user)
-
-essaie = 1
-gain=10
-
 jeu = True
 
 while jeu:
+    nb_python = level.get_nb_python
+    nb_coup = level.get_nb_coup_max()
 
-# while essaie != 3 or nb_user!=nb_python:
+    mise = input("Le jeu commence, entrez votre mise : ? ")
+    while ( not level.mise_is_valid(mise, solde)):
+        mise = input("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et 10 € :  ? ")
+    
+    player.add_mise(mise)
 
-#     if test:
-#         nb_user = level.nb_user_is_true()
+    nb_user = input("Alors mon nombre est : ? " )
+    test = level.nb_user_is_valid(nb_user)
+    essai = 1
+    
+    while essai < nb_coup or nb_user!=nb_python:
 
-#         if nb_user > nb_python:
-#             print("Votre nbre est trop grand !")
-#             essaie+1
-#             print("Il vous reste "+essaie - 3+" chance !")
+        if test:
+            nb_user = level.nb_user_is_true()
 
-#         if nb_user < nb_python:
-#             print("Votre nbre est trop petit !")
-#             essaie+1
-#             print("Il vous reste "+essaie -3+" chance !")
+            if nb_user > nb_python:
+                print("Votre nbre est trop grand !")
+                essai+1
+                print("Il vous reste "+essai - nb_coup+" chance !")
 
-#         if nb_user == nb_python:
-#             print ("Bingo "+name_user+", vous avez gagné en "+essaie+" coup(s) et vous avez emporté "+gains+" € !")
-#             break
-#     else:
-#         nb_user = int(input("Je ne comprends pas ! Entrer SVP un nombre entre 1 et 10 :  ?"))
+            if nb_user < nb_python:
+                print("Votre nbre est trop petit !")
+                essai+1
+                print("Il vous reste "+essai - nb_coup+" chance !")
+
+            if nb_user == nb_python:
+                print ("Bingo "+player.nom+", vous avez gagné en "+essai+" coup(s) et vous avez emporté "+gain+" € !")
+                break
+        else:
+            nb_user = input("Je ne comprends pas ! Entrer SVP un nombre entre 1 et 10 :  ?")
+            essai+1
 
 
+    if nb_user != nb_python:
+        print("Vous avez perdu ! Mon nombre est "+nb_python+" !")
+        perdu = True
 
+    continuer = input("Souhaitez-vous continuer la partie (O/N) ? ")
 
-if nb_user != nb_python:
-    print("Vous avez perdu ! Mon nombre est "+nb_python+" !")
+    while continuer != "O" or "o" or "N" or "n":
+        continuer = input("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?" )
 
-continuer = input("Souhaitez-vous continuer la partie (O/N) ? ")
-
-while continuer != "O" or "o" or "oui" or "Oui" or "N" or "n" or "non" or "Non":
-    continuer=(input("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?" ))
-
-if continuer == "O" or "o" or "oui" or "Oui":
-    print("Super !")
-
-if continuer == "N" or "n" or "non" or "Non":
-    print("Au revoir ! Vous finissez la partie avec "+gain+" €.")
-    quit
+    if continuer == "O" or "o" :
+        if perdu and level.get_level() != 1:
+            level=Niveau(level.get_level() - 1)
+            
+        
+        elif perdu and level.get_level() == 1:
+            level=Niveau(1)
+        
+        else:
+            level=Niveau(level.get_level() + 1)
+        
+        player.set_level(level)
+        
+    if continuer == "N" or "n" :
+        print("Au revoir ! Vous finissez la partie avec "+gain+" €.")
+        jeu = False
+        
