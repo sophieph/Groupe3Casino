@@ -17,22 +17,26 @@ regle="- Je viens de penser à un nombre entre 1 et 10. Devinez lequel ?\n\
     - de quitter le jeu.\n\
 - Dès que vous devinez mon nombre : vous avez le droit de quitter le jeu et de partir avec vos gains OU de continuer le jeu en passant au level supérieur."
 print(regle)
-player.solde_depart=10
+solde = player.solde
 #faire appel fonction mise
-print("Le jeu commence, entrez votre mise : ? ")
-mise = player.setSoldeAvecMise()
 
-nb_python = niveau.get_nb_python
+mise = input("Le jeu commence, entrez votre mise : ? ")
+while ( not level.mise_is_valid(mise, solde):
+    mise = input("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et 10 € :  ? ")
+
+player.add_mise(mise)
+
+nb_python = level.get_nb_python
 
 nb_user = input("Alors mon nombre est : ? " )
-test = niveau.nb_user_is_valid(nb_user)
+test = level.nb_user_is_valid(nb_user)
 
 essaie = 1
 gain=10
 while essaie != 3 or nb_user!=nb_python:
 
     if test:
-        nb_user = niveau.nb_user_is_true()
+        nb_user = level.nb_user_is_true()
 
         if nb_user > nb_python:
             print("Votre nbre est trop grand !")
