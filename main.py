@@ -33,26 +33,34 @@ test = level.nb_user_is_valid(nb_user)
 
 essaie = 1
 gain=10
-while essaie != 3 or nb_user!=nb_python:
 
-    if test:
-        nb_user = level.nb_user_is_true()
+jeu = True
 
-        if nb_user > nb_python:
-            print("Votre nbre est trop grand !")
-            essaie+1
-            print("Il vous reste "+essaie - 3+" chance !")
+while jeu:
 
-        if nb_user < nb_python:
-            print("Votre nbre est trop petit !")
-            essaie+1
-            print("Il vous reste "+essaie -3+" chance !")
+# while essaie != 3 or nb_user!=nb_python:
 
-        if nb_user == nb_python:
-            print ("Bingo "+name_user+", vous avez gagné en "+essaie+" coup(s) et vous avez emporté "+gains+" € !")
-            break
-    else:
-        nb_user = int(input("Je ne comprends pas ! Entrer SVP un nombre entre 1 et 10 :  ?"))
+#     if test:
+#         nb_user = level.nb_user_is_true()
+
+#         if nb_user > nb_python:
+#             print("Votre nbre est trop grand !")
+#             essaie+1
+#             print("Il vous reste "+essaie - 3+" chance !")
+
+#         if nb_user < nb_python:
+#             print("Votre nbre est trop petit !")
+#             essaie+1
+#             print("Il vous reste "+essaie -3+" chance !")
+
+#         if nb_user == nb_python:
+#             print ("Bingo "+name_user+", vous avez gagné en "+essaie+" coup(s) et vous avez emporté "+gains+" € !")
+#             break
+#     else:
+#         nb_user = int(input("Je ne comprends pas ! Entrer SVP un nombre entre 1 et 10 :  ?"))
+
+
+
 
 if nb_user != nb_python:
     print("Vous avez perdu ! Mon nombre est "+nb_python+" !")
