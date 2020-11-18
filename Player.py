@@ -46,8 +46,14 @@ class Player:
     # Methode qui ajoute le gain dans la liste Gain
     def add_gain(self, gain):
         self.gain.append(gain)
+        for i in self.gain:
+            if (i > self.gain_max):
+                self.gain_max = i
 
     # Methode qui ajoute la mise dans la liste Mise
     def add_mise(self, mise):
         self.mise.append(mise)
+        for i in self.mise:
+            if (i > self.mise_max):
+                self.mise_max = i
 
