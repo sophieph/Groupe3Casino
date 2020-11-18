@@ -1,5 +1,6 @@
 from Player import Player
 from Niveau import Niveau
+import time
 
 level=Niveau(1)
 name_user = input("Bonjour je suis Python. Quel est votre pseudo ? ")
@@ -20,42 +21,52 @@ regle="- Je viens de penser à un nombre entre 1 et 10. Devinez lequel ?\n\
 solde = player.solde
 
 jeu = True
+perdu = False
 
 while jeu:
     nb_python = level.get_nb_python()
+    print(nb_python)
     nb_coup = level.get_nb_coup_max()
 
     mise = input("Le jeu commence, entrez votre mise : ? ")
     while ( not level.mise_is_valid(mise, solde)):
         mise = input("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et 10 € :  ? ")
     
+    mise=int(mise)
     player.add_mise(mise)
 
     nb_user = input("Alors mon nombre est : ? " )
-    test = level.nb_user_is_valid(nb_user)
     essai = 1
-    
+    time.sleep(1)
+
+    test = level.nb_user_is_valid(nb_user)
+    print(nb_python)
     while essai < nb_coup or nb_user!=nb_python:
-
-        if test:
-            nb_user = level.nb_user_is_true()
-
+        test = level.nb_user_is_valid(nb_user)
+        nb_user=int(nb_user)
+        
+        if test:            
             if nb_user > nb_python:
                 print("Votre nbre est trop grand !")
-                essai+1
-                print("Il vous reste "+essai - nb_coup+" chance !")
+                reste = nb_coup - essai
+                print("Il vous reste "+  str(reste) +" chance !")
+                essai += 1
 
-            if nb_user < nb_python:
+            elif nb_user < nb_python:
                 print("Votre nbre est trop petit !")
-                essai+1
-                print("Il vous reste "+essai - nb_coup+" chance !")
+                reste = nb_coup - essai
+                print("Il vous reste "+ str(reste) +" chance !")
+                essai += 1
 
-            if nb_user == nb_python:
-                print ("Bingo "+player.nom+", vous avez gagné en "+essai+" coup(s) et vous avez emporté "+gain+" € !")
+            elif nb_user == nb_python:
+                gain = level.get_gain(mise, essai)
+                print ("Bingo "+player.nom+", vous avez gagné en "+ str(essai) +" coup(s) et vous avez emporté "+ str(gain) +" € !")
                 break
         else:
-            nb_user = input("Je ne comprends pas ! Entrer SVP un nombre entre 1 et 10 :  ?")
-            essai+1
+            # nb_user = input("Je ne comprends pas ! Entrer SVP un nombre entre 1 et 10 :  ?")
+            essai+=1
+
+        nb_user=input("Nombre ? ")
 
 
     if nb_user != nb_python:
@@ -65,22 +76,23 @@ while jeu:
     continuer = input("Souhaitez-vous continuer la partie (O/N) ? ")
 
     while continuer != "O" or "o" or "N" or "n":
-        continuer = input("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?" )
 
-    if continuer == "O" or "o" :
-        if perdu and level.get_level() != 1:
-            level=Niveau(level.get_level() - 1)
+        if continuer == "O" or "o" :
+            if perdu and level.get_level() != 1:
+                level=Niveau(level.get_level() - 1)
+                
             
+            elif perdu and level.get_level() == 1:
+                level=Niveau(1)
+            
+            else:
+                level=Niveau(level.get_level() + 1)
+            
+            player.set_level(level)
+
+        elif continuer == "N" or "n" :
+            print("Au revoir ! Vous finissez la partie avec "+gain+" €.")
+            jeu = False
         
-        elif perdu and level.get_level() == 1:
-            level=Niveau(1)
-        
-        else:
-            level=Niveau(level.get_level() + 1)
-        
-        player.set_level(level)
-        
-    if continuer == "N" or "n" :
-        print("Au revoir ! Vous finissez la partie avec "+gain+" €.")
-        jeu = False
-        
+        else :
+            continuer = input("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?" )
