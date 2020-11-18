@@ -42,7 +42,7 @@ class Niveau:
                 return False
         else:
             return False
-    def get_nb_coup_max(self, ):
+    def get_nb_coup_max(self):
         if(self.level == 1):
             return 3
         elif (self.level == 2):
@@ -56,6 +56,6 @@ class Niveau:
             return mise
         elif (nb_essai == 3):
             return mise/2
-    def update_nb_python(self, ):
-        self.nb_python = random.randrange(1, 10*self.level)
+    def update_nb_python(self):
+        self.nb_python = random.randrange(1, self.level*10)
 
