@@ -1,67 +1,59 @@
-# Class User 
+import csv
+from datetime import date
 
+from Niveau import Niveau
+
+# Class User 
 class Player: 
     """Classe définissant un joueur caractérisée par :
     - son nom
     - son solde de départ
-    - son solde de fin de jeu
-    - son niveau maximum atteint pendant le jeu 
-    - son lieu de résidence"""
+    - son solde actuel
+    - son niveau maximum atteint pendant le jeu  - Objet Niveau
+    """
 
-    
-    def __init__(self): # Notre méthode constructeur
+    def __init__(self, level): # Notre méthode constructeur
         self.nom = ""
-        self.solde_depart = ""
-        self.solde = ""
-        self.level = 1
+        self.date = date.today()
+        self.solde_depart = 10
+        self.solde = 10
+        self.level = level
+        self.gain = []
+        self.mise = []
+        self.gain_max = 0
+        self.mise_max = 0
+        
 
     #Methode qui set le nom du joueur
-    def setNom(self, nom):
+    def set_nom(self, nom):
         self.nom = nom
 
         return self.nom
+    
 
     # Methode qui set le level du joueur
-    def setLevel(self, level):
+    def set_level(self, level):
         self.level = level
+
+        return self.level
     
     # Methode qui set le solde de départ du joueur
-    def setSoldeDepart(self, solde):
-        error = "Le montant saisie n'est pas valide, solde minimum de 1€ requis : "
-        try:
-            solde = float(solde)
-            if solde < 1:
-                print(error)
-            else:
-                self.solde_depart = solde
-                self.solde = solde
+    def set_solde(self, solde):
+        self.solde = solde
 
-                return self.solde
-        except ValueError:
-            print(error)    
+        return solde
 
-    # Methode qui retourne le solde selon la mise
-    def setSoldeAvecMise(self, mise):
-        mise_min = 0.01
-        try:
-            mise = float(mise)
-            if (mise < mise_min):
-                print(
-                    "Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et %.2f € :" % (self.solde))
-            elif mise > self.solde:
-                print("Erreur, votre mise est plus elevé que votre solde.\n")
-                print("Entrez une mise inférieur ou égale à %.2f € :" % (self.solde))
-            else: 
-                self.solde -= mise
+    # Methode qui ajoute le gain dans la liste Gain
+    def add_gain(self, gain):
+        self.gain.append(gain)
+        for i in self.gain:
+            if (i > self.gain_max):
+                self.gain_max = i
 
-                return self.solde
-
-        except ValueError:
-            print("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et %.2f € : " % (self.solde))
-
-
-
-
-
-    
+    # Methode qui ajoute la mise dans la liste Mise
+    def add_mise(self, mise):
+        self.mise.append(mise)
+        for i in self.mise:
+            if (i > self.mise_max):
+                self.mise_max = i
 
