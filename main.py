@@ -1,13 +1,27 @@
 from Player import Player
 from Niveau import Niveau
-import time
+import sys
+import select
 
-level=Niveau(1)
+class TimeoutExpired(Exception):
+    pass
+
+# Créer une limite de temps à l'input
+def input_with_timeout(prompt, timeout):
+    sys.stdout.write(prompt)
+    sys.stdout.flush()
+    ready, _, _ = select.select([sys.stdin], [], [], timeout)
+    if ready:
+        return sys.stdin.readline().rstrip('\n')  # expect stdin to be line-buffered
+    raise TimeoutExpired
+
+
+level = Niveau(1)
 name_user = input("Bonjour je suis Python. Quel est votre pseudo ? ")
 player = Player(level)
 player.nom = name_user
 
-print ("Hello "+player.nom+", vous avez 10 €, Très bien ! Installez vous SVP à la table de pari.")
+print ("Hello " + player.nom + ", vous avez 10 €, Très bien ! Installez vous SVP à la table de pari.")
 regle="- Je viens de penser à un nombre entre 1 et 10. Devinez lequel ?\n\
 - Att : vous avez le droit à trois essais !\n\
 - Si vous devinez mon nombre dès le premier coup, vous gagnez le double de votre mise !\n\
@@ -34,15 +48,13 @@ while jeu:
     mise=int(mise)
     player.add_mise(mise)
     player.set_solde(player.solde - mise)
-    print(player.solde)
 
     nb_user = input("Alors mon nombre est : ? " )
     essai = 1
-    time.sleep(1)
 
     test = level.nb_user_is_valid(nb_user)
     print(nb_python)
-    while essai < nb_coup or nb_user!=nb_python:
+    while essai < nb_coup:
         test = level.nb_user_is_valid(nb_user)
         nb_user=int(nb_user)
         
@@ -61,7 +73,8 @@ while jeu:
 
             elif nb_user == nb_python:
                 gain = level.get_gain(mise, essai)
-                player.set_solde(player.solde+gain)
+                player.set_solde(player.solde + gain)
+                player.add_gain(gain)
 
                 print ("Bingo "+player.nom+", vous avez gagné en "+ str(essai) +" coup(s) et vous avez emporté "+ str(gain) +" € !")
                 break
@@ -73,7 +86,7 @@ while jeu:
 
 
     if nb_user != nb_python:
-        print("Vous avez perdu ! Mon nombre est "+nb_python+" !")
+        print("Vous avez perdu ! Mon nombre est "+ str(nb_python)+" !")
         perdu = True
 
     continuer = input("Souhaitez-vous continuer la partie (O/N) ? ")
@@ -94,11 +107,10 @@ while jeu:
             player.set_level(level)
             break
         elif continuer == "N" or continuer == "n" :
-            print("Au revoir ! Vous finissez la partie avec "+gain+" €.")
+            print("Au revoir ! Vous finissez la partie avec "+ str(gain)+" €.")
             jeu = False
             player.set_level(level)
             break
        
         continuer = input("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?" )
         continue
-            
