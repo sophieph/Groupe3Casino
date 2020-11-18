@@ -2,9 +2,12 @@ from Player import Player
 from Niveau import Niveau
 import sys
 import select
+import os.path
+from os import path
 
 class TimeoutExpired(Exception):
     pass
+
 
 # Créer une limite de temps à l'input
 def input_with_timeout(prompt, timeout):
@@ -15,12 +18,18 @@ def input_with_timeout(prompt, timeout):
         return sys.stdin.readline().rstrip('\n')  # expect stdin to be line-buffered
     raise TimeoutExpired
 
-
 level = Niveau(1)
 name_user = input("Bonjour je suis Python. Quel est votre pseudo ? ")
 player = Player(level)
+player.open_file('stat.csv')
 player.nom = name_user
 
+#TODO savoir si il existe 
+    # if exists 
+        #input(quel level)
+        #level.set_level(input)
+
+    
 print ("Hello " + player.nom + ", vous avez 10 €, Très bien ! Installez vous SVP à la table de pari.")
 regle="- Je viens de penser à un nombre entre 1 et 10. Devinez lequel ?\n\
 - Att : vous avez le droit à trois essais !\n\
@@ -114,3 +123,7 @@ while jeu:
        
         continuer = input("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?" )
         continue
+
+
+    #TODO stocker stat de l'utilisateur 
+    #player.set_data()

@@ -73,17 +73,15 @@ class Player:
     # Methode pour ouvrir un fichier
     def open_file(self, filename):
         if not path.exists(filename):
-            with open('stat.csv', 'w+') as stat_file:
+            with open(filename, 'w+') as stat_file:
                 writer = csv.DictWriter(stat_file, fieldnames=[
-                    'id;', 'date;', 'nom;', 'niveau_max;', 'solde_depart;', 'solde_fin;', 'liste_gain;', 'liste_mise;', 'gain_max;', 'mise_max'
+                    "id;", "date;", "nom;", "niveau_max;", "solde_depart;", "solde_fin;", "liste_gain;", "liste_mise;", "gain_max;", "mise_max"
                      ])
                 writer.writeheader()
             
             with open('stat_niveau.csv', 'w+') as stat_niveau_file:
                 writer_data = csv.DictWriter(stat_niveau_file, fieldnames=[
-                    'id_jeu;', 'niveau;', 'gain;', 'nb_coup;', 'mise;'
+                    "id_jeu;", "niveau;", "gain;", "nb_coup;", "mise;"
                      ])
                 writer_data.writeheader()
         
-            
-
