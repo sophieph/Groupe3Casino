@@ -70,18 +70,31 @@ class Player:
             if (i > self.mise_max):
                 self.mise_max = i
 
-    # Methode pour ouvrir un fichier
+    # Methode pour creer un fichier
     def open_file(self, filename):
         if not path.exists(filename):
             with open(filename, 'w+') as stat_file:
-                writer = csv.DictWriter(stat_file, fieldnames=[
-                    "id;", "date;", "nom;", "niveau_max;", "solde_depart;", "solde_fin;", "liste_gain;", "liste_mise;", "gain_max;", "mise_max"
-                     ])
+                fieldnames = [
+                    'id', 'date', 'nom', 'niveau_max', 'solde_depart', 'solde_fin', 'liste_gain', 'liste_mise', 'gain_max', 'mise_max'
+                     ]
+                writer = csv.DictWriter(stat_file, fieldnames=fieldnames)
                 writer.writeheader()
             
             with open('stat_niveau.csv', 'w+') as stat_niveau_file:
-                writer_data = csv.DictWriter(stat_niveau_file, fieldnames=[
-                    "id_jeu;", "niveau;", "gain;", "nb_coup;", "mise;"
-                     ])
+                fieldnames= [
+                    'id_jeu', 'niveau', 'gain', 'nb_coup', 'mise'
+                     ]
+                writer_data = csv.DictWriter(stat_niveau_file, fieldnames=fieldnames)
                 writer_data.writeheader()
         
+    # Methode pour sauvegarder les donnees
+    def set_data(self, filename):
+        with open(filename, "a", encoding="utf-8") as stat_file:
+            
+            stat_file.write(str(self.id) +
+             ',' + str(self.date) +
+              ',' + str(self.nom) + 
+              ','+ str(self.level.level) +
+               ','+ str(self.solde_depart) +
+                ','+ str(self.solde) +
+                 ','+ str(self.gainList) + ','+ str(self.miseList) + ','+ str(self.gain_max) + ','+ str(self.mise_max) + '\n')

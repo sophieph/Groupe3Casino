@@ -18,10 +18,11 @@ def input_with_timeout(prompt, timeout):
         return sys.stdin.readline().rstrip('\n')  # expect stdin to be line-buffered
     raise TimeoutExpired
 
+filename = 'stat.csv'
 level = Niveau(1)
 name_user = input("Bonjour je suis Python. Quel est votre pseudo ? ")
 player = Player(level)
-player.open_file('stat.csv')
+player.open_file(filename)
 player.nom = name_user
 
 #TODO savoir si il existe 
@@ -116,6 +117,7 @@ while jeu:
             player.set_level(level)
             break
         elif continuer == "N" or continuer == "n" :
+            print(gain)
             print("Au revoir ! Vous finissez la partie avec "+ str(gain)+" €.")
             jeu = False
             player.set_level(level)
@@ -126,4 +128,4 @@ while jeu:
 
 
     #TODO stocker stat de l'utilisateur 
-    #player.set_data()
+    player.set_data(filename)
