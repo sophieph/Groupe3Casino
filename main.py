@@ -18,7 +18,6 @@ regle="- Je viens de penser à un nombre entre 1 et 10. Devinez lequel ?\n\
     - de quitter le jeu.\n\
 - Dès que vous devinez mon nombre : vous avez le droit de quitter le jeu et de partir avec vos gains OU de continuer le jeu en passant au level supérieur."
 #print(regle)
-solde = player.solde
 
 jeu = True
 perdu = False
@@ -29,11 +28,13 @@ while jeu:
     nb_coup = level.get_nb_coup_max()
 
     mise = input("Le jeu commence, entrez votre mise : ? ")
-    while ( not level.mise_is_valid(mise, solde)):
+    while ( not level.mise_is_valid(mise, player.solde)):
         mise = input("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et 10 € :  ? ")
     
     mise=int(mise)
     player.add_mise(mise)
+    player.set_solde(player.solde - mise)
+    print(player.solde)
 
     nb_user = input("Alors mon nombre est : ? " )
     essai = 1
@@ -60,6 +61,8 @@ while jeu:
 
             elif nb_user == nb_python:
                 gain = level.get_gain(mise, essai)
+                player.set_solde(player.solde+gain)
+
                 print ("Bingo "+player.nom+", vous avez gagné en "+ str(essai) +" coup(s) et vous avez emporté "+ str(gain) +" € !")
                 break
         else:
@@ -75,24 +78,27 @@ while jeu:
 
     continuer = input("Souhaitez-vous continuer la partie (O/N) ? ")
 
-    while continuer != "O" or "o" or "N" or "n":
-
-        if continuer == "O" or "o" :
+    while True:
+        if continuer == "O" or continuer == "o" :
             if perdu and level.get_level() != 1:
                 level=Niveau(level.get_level() - 1)
-                
-            
+                break
+        
             elif perdu and level.get_level() == 1:
                 level=Niveau(1)
-            
+                break
+
             else:
                 level=Niveau(level.get_level() + 1)
             
             player.set_level(level)
-
-        elif continuer == "N" or "n" :
+            break
+        elif continuer == "N" or continuer == "n" :
             print("Au revoir ! Vous finissez la partie avec "+gain+" €.")
             jeu = False
-        
-        else :
-            continuer = input("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?" )
+            player.set_level(level)
+            break
+       
+        continuer = input("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?" )
+        continue
+            
