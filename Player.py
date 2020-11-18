@@ -1,6 +1,7 @@
 import csv
 from datetime import date
-
+import os.path
+from os import path
 from Niveau import Niveau
 
 # Class User 
@@ -13,13 +14,17 @@ class Player:
     """
 
     def __init__(self, level): # Notre méthode constructeur
+        self.id = 1
         self.nom = ""
         self.date = date.today()
         self.solde_depart = 10
         self.solde = 10
         self.level = level
-        self.gain = []
-        self.mise = []
+        self.nb_user = 0
+        self.gain = 0
+        self.mise = 0
+        self.gainList = []
+        self.miseList = []
         self.gain_max = 0
         self.mise_max = 0
         
@@ -30,12 +35,20 @@ class Player:
 
         return self.nom
     
-
     # Methode qui set le level du joueur
     def set_level(self, level):
         self.level = level
 
         return self.level
+
+    def set_nb_user(self, nb_user):
+        self.nb_user = nb_user
+
+        return self.nb_user
+    def set_mise(self, mise):
+        self.mise = mise
+        
+        return self.mise
     
     # Methode qui set le solde de départ du joueur
     def set_solde(self, solde):
@@ -45,15 +58,32 @@ class Player:
 
     # Methode qui ajoute le gain dans la liste Gain
     def add_gain(self, gain):
-        self.gain.append(gain)
-        for i in self.gain:
+        self.gainList.append(gain)
+        for i in self.gainList:
             if (i > self.gain_max):
                 self.gain_max = i
 
     # Methode qui ajoute la mise dans la liste Mise
     def add_mise(self, mise):
-        self.mise.append(mise)
-        for i in self.mise:
+        self.miseList.append(mise)
+        for i in self.miseList:
             if (i > self.mise_max):
                 self.mise_max = i
+
+    # Methode pour ouvrir un fichier
+    def open_file(self, filename):
+        if not path.exists(filename):
+            with open('stat.csv', 'w+') as stat_file:
+                writer = csv.DictWriter(stat_file, fieldnames=[
+                    'id;', 'date;', 'nom;', 'niveau_max;', 'solde_depart;', 'solde_fin;', 'liste_gain;', 'liste_mise;', 'gain_max;', 'mise_max'
+                     ])
+                writer.writeheader()
+            
+            with open('stat_niveau.csv', 'w+') as stat_niveau_file:
+                writer_data = csv.DictWriter(stat_niveau_file, fieldnames=[
+                    'id_jeu;', 'niveau;', 'gain;', 'nb_coup;', 'mise;'
+                     ])
+                writer_data.writeheader()
+        
+            
 
