@@ -25,6 +25,11 @@ player = Player(level)
 player.open_file(filename)
 player.nom = name_user
 
+# #Afficher les statistiques si joueur existe
+# if (player.player_exists()):
+
+
+    
 #TODO savoir si il existe 
     # if exists 
         #input(quel level)

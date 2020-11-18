@@ -1,8 +1,11 @@
 import csv
 from datetime import date
+import datetime
 import os.path
 from os import path
+import re
 from Niveau import Niveau
+
 
 # Class User 
 class Player: 
@@ -16,7 +19,7 @@ class Player:
     def __init__(self, level): # Notre méthode constructeur
         self.id = 1
         self.nom = ""
-        self.date = date.today()
+        self.date = datetime.datetime.today()
         self.solde_depart = 10
         self.solde = 10
         self.level = level
@@ -90,7 +93,6 @@ class Player:
     # Methode pour sauvegarder les donnees
     def set_data(self, filename):
         with open(filename, "a", encoding="utf-8") as stat_file:
-            
             stat_file.write(str(self.id) +
              ',' + str(self.date) +
               ',' + str(self.nom) + 
@@ -98,3 +100,25 @@ class Player:
                ','+ str(self.solde_depart) +
                 ','+ str(self.solde) +
                  ','+ str(self.gainList) + ','+ str(self.miseList) + ','+ str(self.gain_max) + ','+ str(self.mise_max) + '\n')
+
+    # Methode pour ecrire les statistiques d'un niveau
+    def set_data_by_level(self, nb_coup):
+         with open('stat_niveau.csv', "a", encoding="utf-8") as stat_file:
+             stat_file.write(str(self.id) +
+             ',' + str(self.level.level) +
+              ',' + str(self.gain) + 
+              ','+ str(nb_coup) +
+               ','+ str(self.mise) + '\n')
+
+    # Methode si le joueur existe
+    def player_exists(self):
+        with open('stat_niveau.csv', "r", encoding="utf-8") as stat_file:
+            for line in stat_file:
+                match = re.search(self.nom, line)
+                if match:
+                    return True
+                else: 
+                    return False
+
+    #Methode qui decrit les stats du joueur
+    # def show_stat():
