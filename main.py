@@ -39,16 +39,17 @@ while jeu and (player.solde > 0):
     print('1) lancer le jeu')
     print('2) afficher les information de la session')
     print('3) afficher les regles')
+    print('4) quitter ')
     choix = input()
-    if (choix == 3):
+    if (choix == "3"):
         print(regle)
-    elif (choix == 2):
+    elif (choix == "2"):
         print('nom :   ' + player.nom)
         print('level : ' + str(player.level.get_level()))
         print('solde : ' + str(player.solde))
         print('gain  : ' + str(player.gain))
         print('mise  : ' + str(player.mise))
-    elif (choix == 1):
+    elif (choix == "1"):
         player.mise = input("Le jeu commence, entrez votre mise : ? ")
         while ( not player.level.mise_is_valid(player.mise, player.solde)):
             player.mise = input("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et " + str(player.solde) + " € :  ? ")
@@ -140,5 +141,8 @@ while jeu and (player.solde > 0):
                     break 
         else:
             jeu = False
-
+    elif(choix == "4"):
+        jeu = False
+    else:
+        print('Je ne comprend pas')
 print('\nLa fin du jeu, bye')
