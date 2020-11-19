@@ -49,6 +49,7 @@ while jeu:
 
     player.mise=int(player.mise)
     player.add_mise(player.mise)
+    
     player.set_solde(player.solde - player.mise)
 
     essai = 1
@@ -81,9 +82,9 @@ while jeu:
 
             elif player.nb_user == nb_python:
                 player.gain = level.get_gain(player.mise, essai)
-                player.set_solde(player.solde + player.gain)
+                # modification aimen
+                player.set_solde(player.solde + player.mise + player.gain)
                 player.add_gain(player.gain)
-
                 print ("Bingo "+player.nom+", vous avez gagné en "+ str(essai) +" coup(s) et vous avez emporté "+ str(player.gain) +" € !")
                 break
         else:
