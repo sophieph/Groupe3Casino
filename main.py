@@ -15,7 +15,6 @@ def input_with_timeout(prompt, timeout):
         return sys.stdin.readline().rstrip('\n')  # expect stdin to be line-buffered
     raise TimeoutExpired
 
-
 level = Niveau(1)
 name_user = input("Bonjour je suis Python. Quel est votre pseudo ? ")
 player = Player(level)
