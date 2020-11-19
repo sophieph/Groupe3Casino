@@ -1,6 +1,6 @@
 import csv
 from datetime import date
-import datetime
+from datetime import datetime
 import os.path
 from os import path
 import re
@@ -19,7 +19,7 @@ class Player:
     def __init__(self, level): # Notre méthode constructeur
         self.id = 1
         self.nom = ""
-        self.date = datetime.datetime.today()
+        self.date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
         self.solde_depart = 10
         self.solde = 10
         self.level = level
