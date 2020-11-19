@@ -23,7 +23,10 @@ $('#set-level').click(function(e){
         data: $('#level').serialize(),
         type: 'POST',
         success: function(res) {
+            console.log(jQuery.type(res));
             resu = jQuery.parseJSON(res);
+            console.log(jQuery.type(resu));
+
             console.log(resu);
 
             if (resu.status == "OK") {
