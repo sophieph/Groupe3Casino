@@ -49,96 +49,96 @@ while jeu and (player.solde > 0):
         print('gain  : ' + str(player.gain))
         print('mise  : ' + str(player.mise))
     elif (choix == 1):
-    player.mise = input("Le jeu commence, entrez votre mise : ? ")
-    while ( not player.level.mise_is_valid(player.mise, player.solde)):
-        player.mise = input("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et " + str(player.solde) + " € :  ? ")
-    
-    print("nb_python : "  + str(player.level.nb_python))
-    nb_coup = player.level.get_nb_coup_max()
-    player.mise=int(player.mise)
-    player.set_solde(player.solde - player.mise)
-
-    essai = 1
-    exception = True
-   
-    while essai <= nb_coup:
-        # TimeoutException
-        try:
-            player.nb_user = inputimeout("mon nombre est : ? ", timeout = 20-(5*player.level.get_level())) 
-        except TimeoutOccurred:
-            print('\nVous avez mis trop de temps pour repondre, vous perdez un coup ...\n')
-            essai += 1
-            continue
+        player.mise = input("Le jeu commence, entrez votre mise : ? ")
+        while ( not player.level.mise_is_valid(player.mise, player.solde)):
+            player.mise = input("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et " + str(player.solde) + " € :  ? ")
         
-        test = player.level.nb_user_is_valid(player.nb_user)        
-        if test:            
-            player.nb_user=int(player.nb_user)
-            if player.nb_user > player.level.nb_python:
-                print("Votre nbre est trop grand !")
-                reste = nb_coup - essai
-                print("Il vous reste "+  str(reste) +" chance !")
-                essai += 1
+        print("nb_python : "  + str(player.level.nb_python))
+        nb_coup = player.level.get_nb_coup_max()
+        player.mise=int(player.mise)
+        player.set_solde(player.solde - player.mise)
 
-            elif player.nb_user < player.level.nb_python:
-                print("Votre nbre est trop petit !")
-                reste = nb_coup - essai
-                print("Il vous reste "+ str(reste) +" chance !")
-                essai += 1
-
-            elif player.nb_user == player.level.nb_python:
-                player.gain = int(player.level.get_gain(player.mise, essai))
-                player.set_solde(player.solde + player.gain)
-                print ("Bingo "+player.nom+", vous avez gagné en "+ str(essai) +" coup(s) et vous avez emporté "+ str(player.gain) +" € !")
-                break
-        else:
-            print("Je ne comprends pas ! ")
-            essai+=1
-
-    if player.nb_user != player.level.nb_python:
-        print("Vous avez perdu ! Mon nombre est "+ str(player.level.nb_python)+" !")
-        perdu = True
-
-    player.set_data_by_level(essai)
- 
-    continuer = "" 
-    # exception
-    if (player.level.get_level() != 3 and player.solde > 0):
-        try:
-            continuer = inputimeout("Souhaitez-vous continuer la partie (O/N) ? ", timeout= 10)
-        except TimeoutOccurred:
-            jeu = False
-            break
-
-        while True:
-            if continuer == "O" or continuer == "o" :
-                if perdu and player.level.get_level() != 1:
-                    player.level=Niveau(player.level.get_level() - 1)
-                    break
-                elif perdu and player.level.get_level() == 1:
-                    player.level=Niveau(1)
-                    break
-                else:
-                    if player.level.get_level() == 3:
-                        jeu = False
-                        break
-                    else: 
-                        player.level=Niveau(player.level.get_level() + 1)
-            
-                break
-
-            elif continuer == "N" or continuer == "n" :
-                print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+" €.")
-                jeu = False
-                player.set_level(player.level)
-                break
-            # exception
-       
+        essai = 1
+        exception = True
+    
+        while essai <= nb_coup:
+            # TimeoutException
             try:
-                continuer = inputimeout("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?", timeout = 10 )
+                player.nb_user = inputimeout("mon nombre est : ? ", timeout = 20-(5*player.level.get_level())) 
+            except TimeoutOccurred:
+                print('\nVous avez mis trop de temps pour repondre, vous perdez un coup ...\n')
+                essai += 1
+                continue
+            
+            test = player.level.nb_user_is_valid(player.nb_user)        
+            if test:            
+                player.nb_user=int(player.nb_user)
+                if player.nb_user > player.level.nb_python:
+                    print("Votre nbre est trop grand !")
+                    reste = nb_coup - essai
+                    print("Il vous reste "+  str(reste) +" chance !")
+                    essai += 1
+
+                elif player.nb_user < player.level.nb_python:
+                    print("Votre nbre est trop petit !")
+                    reste = nb_coup - essai
+                    print("Il vous reste "+ str(reste) +" chance !")
+                    essai += 1
+
+                elif player.nb_user == player.level.nb_python:
+                    player.gain = int(player.level.get_gain(player.mise, essai))
+                    player.set_solde(player.solde + player.gain)
+                    print ("Bingo "+player.nom+", vous avez gagné en "+ str(essai) +" coup(s) et vous avez emporté "+ str(player.gain) +" € !")
+                    break
+            else:
+                print("Je ne comprends pas ! ")
+                essai+=1
+
+        if player.nb_user != player.level.nb_python:
+            print("Vous avez perdu ! Mon nombre est "+ str(player.level.nb_python)+" !")
+            perdu = True
+
+        player.set_data_by_level(essai)
+    
+        continuer = "" 
+        # exception
+        if (player.level.get_level() != 3 and player.solde > 0):
+            try:
+                continuer = inputimeout("Souhaitez-vous continuer la partie (O/N) ? ", timeout= 10)
             except TimeoutOccurred:
                 jeu = False
-                break 
-    else:
-        jeu = False
+                break
+
+            while True:
+                if continuer == "O" or continuer == "o" :
+                    if perdu and player.level.get_level() != 1:
+                        player.level=Niveau(player.level.get_level() - 1)
+                        break
+                    elif perdu and player.level.get_level() == 1:
+                        player.level=Niveau(1)
+                        break
+                    else:
+                        if player.level.get_level() == 3:
+                            jeu = False
+                            break
+                        else: 
+                            player.level=Niveau(player.level.get_level() + 1)
+                
+                    break
+
+                elif continuer == "N" or continuer == "n" :
+                    print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+" €.")
+                    jeu = False
+                    player.set_level(player.level)
+                    break
+                # exception
+        
+                try:
+                    continuer = inputimeout("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?", timeout = 10 )
+                except TimeoutOccurred:
+                    jeu = False
+                    break 
+        else:
+            jeu = False
 
 print('\nLa fin du jeu, bye')
