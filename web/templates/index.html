@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2> Accueil
+</h2>
+
+<div class="row">
+    <div class="col-sm-12">
+        <button id="start-game" class="btn btn-primary">Commencez une partie</button>
+
+        <div id="form-name" class="inactive">
+            <form action="{{ url_for('player_infos') }}" method="POST">
+                <input class="form-control" type="text" name="nom" placeholder="Ajoutez votre nom">
+                <button class="btn btn-primary" type="submit">Jouer</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
