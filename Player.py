@@ -83,15 +83,21 @@ class Player:
                 ','+ str(self.mise) + '\n')
 
     
-    # Methode si le joueur existe
+    #Methode qui decrit les stats du joueur
     def player_exists(self):
         with open('stat_niveau.csv', "r", encoding="utf-8") as stat_file:
-            for line in stat_file:
-                match = re.search(self.nom, line)
+            lines = stat_file.readlines()
+            tmp='2020-11-19 12:14:19.279433,a,-1,10,20,1,20,10'
+            tmp = tmp.split(',')
+            for line in lines:
+                tab = line.split(',')
+                match = re.search(self.nom, tab[1])
                 if match:
-                    return True
+                    match2 = re.search(self.level, tab[2])
+                    if match2: 
+                        if int(tab[4]) > int(tmp[4]):
+                            tmp = tab
                 else: 
                     return False
-
-    #Methode qui decrit les stats du joueur
-    # def show_stat():
+            
+            return tmp
