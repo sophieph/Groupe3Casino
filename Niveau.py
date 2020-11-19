@@ -29,7 +29,6 @@ class Niveau:
                 return True
             else:
                 return False
-            
         except ValueError:
             return False
 
@@ -43,6 +42,7 @@ class Niveau:
                 if (mise > 0 and mise <= solde):
                     return True
                 else:
+                    print('Erreur, votre mise est plus elevé que votre solde.')
                     return False
             else:
                 return False
@@ -73,7 +73,7 @@ class Niveau:
                 return mise
             elif (nb_essai == 4 or nb_essai == 5):
                 return mise/2
-        elif(self.level == 2):
+        elif(self.level == 3):
             if (nb_essai == 1):
                 return 2*mise
             elif (nb_essai == 2 or nb_essai == 3 or nb_essai == 4):
