@@ -74,14 +74,14 @@ class Player:
     # Methode pour sauvegarder les donnees
     def set_data_by_level(self, nb_coup):
         with open('stat.csv', "a", encoding="utf-8") as stat_file:
-            stat_file.write(str(self.id) +
-             ',' + str(self.date) +
-              ',' + str(self.nom) + 
-              ','+ str(self.level.level) +
-               ','+ str(self.solde_depart) +
+            stat_file.write(str(self.date) +
+                ','+ str(self.nom) + 
+                ','+ str(self.level.level) +
+                ','+ str(self.solde_depart) +
                 ','+ str(self.solde) +
                 ','+ str(nb_coup) +
-                 ','+ str(self.gain) + ','+ str(self.mise) + '\n')
+                ','+ str(self.gain) + 
+                ','+ str(self.mise) + '\n')
 
     
     # Methode si le joueur existe

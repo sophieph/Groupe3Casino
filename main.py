@@ -60,7 +60,7 @@ while jeu:
     while essai <= nb_coup:
         # TimeoutException
         try:
-            player.nb_user = int(input_with_timeout("mon nombre est : ? ", 20-(5 * player.level.get_level()))) 
+            player.nb_user = int(input("mon nombre est : ? ")) 
         except TimeoutExpired:
             print('\nVous avez mis trop de temps pour repondre, vous perdez un coup ...\n')
             reste = nb_coup - essai
@@ -104,7 +104,7 @@ while jeu:
     continuer = "" 
     # exception
     try:
-        continuer = input_with_timeout("Souhaitez-vous continuer la partie (O/N) ? ", 10)
+        continuer = input("Souhaitez-vous continuer la partie (O/N) ? ")
     except TimeoutExpired:
         jeu = False
         break
@@ -131,7 +131,7 @@ while jeu:
             break
         # exception
         try:
-            continuer = input_with_timeout("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?", 10)
+            continuer = input("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?")
         except TimeoutExpired:
             jeu = False
             break 
