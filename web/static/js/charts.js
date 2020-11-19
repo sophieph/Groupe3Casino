@@ -14,7 +14,7 @@ let series = jQuery.parseJSON(seriesAjax);
 
 // Get profig avg by level
 let winningAvgAjax = $.ajax({
-    url: '/levels-avg',
+    url: '/winnings-avg',
     type: 'POST',
     global: false,
     async: false,
@@ -25,6 +25,7 @@ let winningAvgAjax = $.ajax({
 }).responseText;
 
 let winningAvg = jQuery.parseJSON(winningAvgAjax);
+console.log(winningAvg.winning);
 
 var data1 = {
     labels: ['Niveau 1', 'Niveau 2', 'Niveau 3'],
@@ -69,36 +70,50 @@ var ctx = document.getElementById('levels').getContext('2d');
 var chart1 = new Chart(ctx, {
     type: "doughnut",
     data: data1,
-    options: options
+    options: options1
 });
 
 var profitData = {
     label: 'Gain moyen par niveau',
-    data: [5427, 5243, 5514, 3933, 1326, 687, 1271, 1638]
+    data: winningAvg.winnings,
+    backgroundColor: [
+        'rgba(60, 99, 132, 0.6)',
+        'rgba(150, 99, 132, 0.6)',
+        'rgba(240, 99, 132, 0.6)'
+      ],
+      borderColor: [
+        'rgba(60, 99, 132, 1)',
+        'rgba(150, 99, 132, 1)',
+        'rgba(210, 99, 132, 1)',
+      ],
+      borderWidth: 2,
+      hoverBorderWidth: 0
 };
 
-var profitOption =  {
-    responsive: true,
-    title: {
-        display: true,
-        position: "top",
-        text: "Moyenne de niveau atteints",
-        fontSize: 18,
-        fontColor: "#111"
-    },
-    legend: {
-        display: true,
-        position: "bottom",
-        labels: {
-            fontColor: "#333",
-            fontSize: 16
-        }
-    }
-};
+// var profitOption =  {
+//     responsive: true,
+//     title: {
+//         display: true,
+//         position: "top",
+//         text: "Moyenne de niveau atteints",
+//         fontSize: 18,
+//         fontColor: "#111"
+//     },
+//     legend: {
+//         display: true,
+//         position: "bottom",
+//         labels: {
+//             fontColor: "#333",
+//             fontSize: 16
+//         }
+//     }
+// };
 
 var profit = document.getElementById('profit-level').getContext('2d');
 var lineChart = new Chart(profit, {
-    type: 'line',
-    data: profitData,
-    options: profitOptions
+    type: 'bar',
+    data: {
+        labels: ["Niveau 1", "Niveau 2", "Niveau 3"],
+        datasets: [profitData]
+      },
 });
