@@ -121,10 +121,12 @@ while jeu:
             essai += 1
 
         if essai > nb_coup and player.nb_user != player.level.nb_python:
+            player.gain = player.gain = 0
             print("Vous avez perdu ! Mon nombre est " + str(player.level.nb_python) + " !")
             perdu = True
+            
 
-    # player.set_data_by_level(essai)
+    player.set_data_by_level(essai)
 
     # si le joueur arrive au max level sans perdre
     if player.level.level == 3 and perdu == False:
