@@ -64,21 +64,21 @@ class Niveau:
             elif (nb_essai == 2):
                 return mise
             elif (nb_essai == 3):
-                return mise/2
+                return int(mise/2)
         elif(self.level == 2):
             if (nb_essai == 1):
                 return 2*mise
             elif (nb_essai == 2 or nb_essai == 3):
                 return mise
             elif (nb_essai == 4 or nb_essai == 5):
-                return mise/2
-        elif(self.level == 2):
+                return int(mise/2)
+        elif(self.level == 3):
             if (nb_essai == 1):
                 return 2*mise
             elif (nb_essai == 2 or nb_essai == 3 or nb_essai == 4):
                 return mise
             elif (nb_essai == 5 or nb_essai == 6 or nb_essai == 7):
-                return mise/2
+                return int(mise/2)
 
     def update_nb_python(self):
         self.nb_python = random.randrange(1, 10*level)
