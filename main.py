@@ -38,7 +38,7 @@ name_user = input("Je suis Python. Quel est votre pseudo ? ")
 player = Player(Niveau(1))
 player.nom = name_user
 
-# open the stat file
+# open the stat file if exists not create
 filename = 'stat.csv'
 player.open_file(filename)
 
@@ -53,7 +53,6 @@ regle="- Je viens de penser à un nombre entre 1 et " + str(player.level.get_lev
     - de retenter votre chance avec l'argent qu'il vous reste pour reconquérir le level perdu.\n\
     - de quitter le jeu.\n\
 - Dès que vous devinez mon nombre : vous avez le droit de quitter le jeu et de partir avec vos gains OU de continuer le jeu en passant au level supérieur."
-#print(regle)
 
 jeu = None
 perdu = False
@@ -98,31 +97,31 @@ while jeu:
             if nb_user > player.level.nb_python:
                 print("Votre nbre est trop grand !")
                 reste = nb_coup - essai
-                print("Il vous reste " +  str(reste) + " chance !")
+                print(bcolors.FAIL +"Il vous reste " +  str(reste) + " chance !"+ bcolors.ENDC)
                 essai += 1
 
             elif nb_user < player.level.nb_python:
                 print("Votre nbre est trop petit !")
                 reste = nb_coup - essai
-                print("Il vous reste " + str(reste) + " chance !")
+                print(bcolors.FAIL + "Il vous reste " + str(reste) + " chance !" + bcolors.ENDC)
                 essai += 1
 
             elif nb_user == player.level.nb_python:
                 player.gain = int(player.level.get_gain(player.mise, essai))
                 player.set_solde(player.solde + player.gain)
-                print ("Bingo " + player.nom + ", vous avez gagné en " + str(essai) + " coup(s) et vous avez emporté " + str(player.gain) +" € !")
+                print(bcolors.WARNING + "Bingo " + player.nom + ", vous avez gagné en " + str(essai) + " coup(s) et vous avez emporté " + str(player.gain) + " € !" + bcolors.ENDC)
                 if (player.level.level != 3):
                     print("Super ! Vous passez au Level " + str(player.level.level + 1) + "! ")
                 break
         else:
             print("Je ne comprends pas ! Entrez un nombre entre 1 et " + str(player.level.level * 10))
             reste = nb_coup - essai
-            print("Il vous reste " + str(reste) + " chance !")
+            print(bcolors.FAIL + "Il vous reste " + str(reste) + " chance !" + bcolors.ENDC)
             essai += 1
 
-        if essai > nb_coup and player.nb_user != player.level.nb_python:
+        if essai > nb_coup and nb_user != player.level.nb_python:
             player.gain = player.gain = 0
-            print("Vous avez perdu ! Mon nombre est " + str(player.level.nb_python) + " !")
+            print(bcolors.FAIL + "Vous avez perdu ! Mon nombre est " + str(player.level.nb_python) + " !" + bcolors.ENDC)
             perdu = True
             
 
@@ -131,7 +130,7 @@ while jeu:
     # si le joueur arrive au max level sans perdre
     if player.level.level == 3 and perdu == False:
         jeu = False
-        print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+" €.")
+        print("Au revoir ! Vous finissez la partie avec "+ str(player.solde)+" €.")
         break
     else :
         if player.solde > 0:
@@ -140,7 +139,7 @@ while jeu:
                 continuer = inputimeout("Souhaitez-vous continuer la partie (O/N) ? ", timeout = 10)
             except TimeoutOccurred:
                 jeu = False
-                print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+" €.")
+                print("Au revoir ! Vous finissez la partie avec "+ str(player.solde)+" €.")
                 break
 
             while True:
@@ -158,7 +157,7 @@ while jeu:
                         player.level = Niveau(player.level.level + 1)
                     break
                 elif continuer == "N" or continuer == "n" :
-                    print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+ " €.")
+                    print("Au revoir ! Vous finissez la partie avec "+ str(player.solde)+ " €.")
                     jeu = False
                     break
                 else:
@@ -166,7 +165,7 @@ while jeu:
                         continuer = inputimeout("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?", timeout = 10 )
                     except TimeoutOccurred:
                         jeu = False
-                        print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+ " €.")
+                        print("Au revoir ! Vous finissez la partie avec "+ str(player.solde)+ " €.")
                         break 
         else:
             print("Vous n'avez plus rien, au revoir ! ")   
