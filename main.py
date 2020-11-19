@@ -56,7 +56,7 @@ while jeu:
     essai = 1
     exception = True
    
-    print("nb_python : " + str(nb_python))
+    print("nb_python : " + str(player.level.nb_python))
     while essai <= nb_coup:
         # TimeoutException
         try:
@@ -71,19 +71,19 @@ while jeu:
         test = player.level.nb_user_is_valid(player.nb_user)        
         if test:            
             player.nb_user = int(player.nb_user)
-            if player.nb_user > nb_python:
+            if player.nb_user > player.level.nb_python:
                 print("Votre nbre est trop grand !")
                 reste = nb_coup - essai
                 print("Il vous reste "+  str(reste) +" chance !")
                 essai += 1
 
-            elif player.nb_user < nb_python:
+            elif player.nb_user < player.level.nb_python:
                 print("Votre nbre est trop petit !")
                 reste = nb_coup - essai
                 print("Il vous reste "+ str(reste) +" chance !")
                 essai += 1
 
-            elif player.nb_user == nb_python:
+            elif player.nb_user == player.level.nb_python:
                 player.gain = level.get_gain(player.mise, essai)
                 print(player.gain)
                 player.set_solde(player.solde + player.gain)
@@ -95,8 +95,8 @@ while jeu:
             nb_user = input("Je ne comprends pas ! Entrer SVP un nombre entre 1 et 10 :  ?")
             essai+=1
 
-    if player.nb_user != nb_python:
-        print("Vous avez perdu ! Mon nombre est "+ str(nb_python) +" !")
+    if player.nb_user != player.level.nb_python:
+        print("Vous avez perdu ! Mon nombre est "+ str(player.level.nb_python) +" !")
         perdu = True
 
     player.set_data_by_level(essai)    
