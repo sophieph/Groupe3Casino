@@ -26,10 +26,6 @@ class Player:
         self.nb_user = 0
         self.gain = 0
         self.mise = 0
-        self.gainList = []
-        self.miseList = []
-        self.gain_max = 0
-        self.mise_max = 0
         
 
     #Methode qui set le nom du joueur
@@ -48,68 +44,46 @@ class Player:
         self.nb_user = nb_user
 
         return self.nb_user
+        
     def set_mise(self, mise):
         self.mise = mise
         
         return self.mise
     
+    def set_gain(self, gain):
+        self.gain = gain
+        
+        return self.gain
+
     # Methode qui set le solde de départ du joueur
     def set_solde(self, solde):
         self.solde = solde
 
         return solde
 
-    # Methode qui ajoute le gain dans la liste Gain
-    def add_gain(self, gain):
-        self.gainList.append(gain)
-        for i in self.gainList:
-            if (i > self.gain_max):
-                self.gain_max = i
-
-    # Methode qui ajoute la mise dans la liste Mise
-    def add_mise(self, mise):
-        self.miseList.append(mise)
-        for i in self.miseList:
-            if (i > self.mise_max):
-                self.mise_max = i
-
     # Methode pour creer un fichier
     def open_file(self, filename):
         if not path.exists(filename):
             with open(filename, 'w+') as stat_file:
                 fieldnames = [
-                    'id', 'date', 'nom', 'niveau_max', 'solde_depart', 'solde_fin', 'liste_gain', 'liste_mise', 'gain_max', 'mise_max'
+                    'id', 'date', 'nom', 'niveau', 'solde_depart', 'solde_fin', 'nb_coup', 'gain', 'mise', 
                      ]
                 writer = csv.DictWriter(stat_file, fieldnames=fieldnames)
                 writer.writeheader()
             
-            with open('stat_niveau.csv', 'w+') as stat_niveau_file:
-                fieldnames= [
-                    'id_jeu', 'niveau', 'gain', 'nb_coup', 'mise'
-                     ]
-                writer_data = csv.DictWriter(stat_niveau_file, fieldnames=fieldnames)
-                writer_data.writeheader()
-        
     # Methode pour sauvegarder les donnees
-    def set_data(self, filename):
-        with open(filename, "a", encoding="utf-8") as stat_file:
+    def set_data_by_level(self, nb_coup):
+        with open('stat.csv', "a", encoding="utf-8") as stat_file:
             stat_file.write(str(self.id) +
              ',' + str(self.date) +
               ',' + str(self.nom) + 
               ','+ str(self.level.level) +
                ','+ str(self.solde_depart) +
                 ','+ str(self.solde) +
-                 ','+ str(self.gainList) + ','+ str(self.miseList) + ','+ str(self.gain_max) + ','+ str(self.mise_max) + '\n')
+                ','+ str(nb_coup) +
+                 ','+ str(self.gain) + ','+ str(self.mise) + '\n')
 
-    # Methode pour ecrire les statistiques d'un niveau
-    def set_data_by_level(self, nb_coup):
-         with open('stat_niveau.csv', "a", encoding="utf-8") as stat_file:
-             stat_file.write(str(self.id) +
-             ',' + str(self.level.level) +
-              ',' + str(self.gain) + 
-              ','+ str(nb_coup) +
-               ','+ str(self.mise) + '\n')
-
+    
     # Methode si le joueur existe
     def player_exists(self):
         with open('stat_niveau.csv', "r", encoding="utf-8") as stat_file:
