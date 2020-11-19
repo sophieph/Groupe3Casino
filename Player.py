@@ -17,7 +17,6 @@ class Player:
     """
 
     def __init__(self, level): # Notre méthode constructeur
-        self.id = 1
         self.nom = ""
         self.date = datetime.datetime.today()
         self.solde_depart = 10
@@ -66,7 +65,7 @@ class Player:
         if not path.exists(filename):
             with open(filename, 'w+') as stat_file:
                 fieldnames = [
-                    'id', 'date', 'nom', 'niveau', 'solde_depart', 'solde_fin', 'nb_coup', 'gain', 'mise', 
+                    'date', 'nom', 'niveau', 'solde_depart', 'solde_fin', 'nb_coup', 'gain', 'mise', 
                      ]
                 writer = csv.DictWriter(stat_file, fieldnames=fieldnames)
                 writer.writeheader()
@@ -74,25 +73,31 @@ class Player:
     # Methode pour sauvegarder les donnees
     def set_data_by_level(self, nb_coup):
         with open('stat.csv', "a", encoding="utf-8") as stat_file:
-            stat_file.write(str(self.id) +
-             ',' + str(self.date) +
-              ',' + str(self.nom) + 
-              ','+ str(self.level.level) +
-               ','+ str(self.solde_depart) +
+            stat_file.write(str(self.date) +
+                ','+ str(self.nom) + 
+                ','+ str(self.level.level) +
+                ','+ str(self.solde_depart) +
                 ','+ str(self.solde) +
                 ','+ str(nb_coup) +
-                 ','+ str(self.gain) + ','+ str(self.mise) + '\n')
+                ','+ str(self.gain) + 
+                ','+ str(self.mise) + '\n')
 
     
-    # Methode si le joueur existe
+    #Methode qui decrit les stats du joueur
     def player_exists(self):
         with open('stat_niveau.csv', "r", encoding="utf-8") as stat_file:
-            for line in stat_file:
-                match = re.search(self.nom, line)
+            lines = stat_file.readlines()
+            tmp='2020-11-19 12:14:19.279433,a,-1,10,20,1,20,10'
+            tmp = tmp.split(',')
+            for line in lines:
+                tab = line.split(',')
+                match = re.search(self.nom, tab[1])
                 if match:
-                    return True
+                    match2 = re.search(self.level, tab[2])
+                    if match2: 
+                        if int(tab[4]) > int(tmp[4]):
+                            tmp = tab
                 else: 
                     return False
-
-    #Methode qui decrit les stats du joueur
-    # def show_stat():
+            
+            return tmp
