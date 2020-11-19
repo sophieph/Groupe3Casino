@@ -125,46 +125,47 @@ while jeu:
             perdu = True
 
     # player.set_data_by_level(essai)
-    print('perdu ' + str(perdu))
-    if player.solde > 0:
-        continuer = "" 
-        try:
-            continuer = inputimeout("Souhaitez-vous continuer la partie (O/N) ? ", timeout = 10)
-        except TimeoutOccurred:
-            jeu = False
-            print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+" €.")
-            break
 
-        while True:
-            if continuer == "O" or continuer == "o" :
-                if perdu:
-                    if player.level.get_level() == 1:
-                        player.level = Niveau(1)
-                        print(player.level.level)
-                    elif player.level.get_level() != 1:
-                        player.level = Niveau(player.level.level - 1)
-                        print(player.level.level)
-                    perdu = False
-                    break
-                else: 
-                    if (player.level.level == 3):
-                        jeu = False
-                    player.level = Niveau(player.level.level + 1)
-                    print(player.level.level)
-                break
-            elif continuer == "N" or continuer == "n" :
-                print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+ " €.")
-                jeu = False
-                # player.set_level(player.level)                    
-                break
-            else:
-                try:
-                    continuer = inputimeout("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?", timeout = 10 )
-                except TimeoutOccurred:
-                    jeu = False
-                    print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+ " €.")
-                    break 
-    else:
-        print("Vous n'avez plus rien, au revoir ! ")   
+    # si le joueur arrive au max level sans perdre
+    if player.level.level == 3 and perdu == False:
         jeu = False
+        print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+" €.")
+        break
+    else :
+        if player.solde > 0:
+            continuer = "" 
+            try:
+                continuer = inputimeout("Souhaitez-vous continuer la partie (O/N) ? ", timeout = 10)
+            except TimeoutOccurred:
+                jeu = False
+                print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+" €.")
+                break
 
+            while True:
+                if continuer == "O" or continuer == "o" :
+                    if perdu:
+                        if player.level.get_level() == 1:
+                            player.level = Niveau(1)
+                        elif player.level.get_level() != 1:
+                            player.level = Niveau(player.level.level - 1)
+                        perdu = False
+                        break
+                    else: 
+                        if (player.level.level == 3):
+                            jeu = False
+                        player.level = Niveau(player.level.level + 1)
+                    break
+                elif continuer == "N" or continuer == "n" :
+                    print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+ " €.")
+                    jeu = False
+                    break
+                else:
+                    try:
+                        continuer = inputimeout("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?", timeout = 10 )
+                    except TimeoutOccurred:
+                        jeu = False
+                        print("Au revoir ! Vous finissez la partie avec "+ str(player.gain)+ " €.")
+                        break 
+        else:
+            print("Vous n'avez plus rien, au revoir ! ")   
+            jeu = False
