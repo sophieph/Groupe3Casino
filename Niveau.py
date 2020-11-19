@@ -80,8 +80,8 @@ class Niveau:
                 return mise
             elif (nb_essai == 5 or nb_essai == 6 or nb_essai == 7):
                 return mise/2
-                
-    def update_nb_python(self ):
+
+    def update_nb_python(self):
         self.nb_python = random.randrange(1, 10*self.level)
 
     # def is_int(self, nombre):

@@ -2,13 +2,57 @@
 {% block content %}
 {{ super() }}
 <h1>Jeu</h1>
-<h2>Bonjour {{nom}} </h2>
-<h2> {{ latest_date }}
 </h2>
 
 
-<div>
-    <p>{{r}}</p>
+<div class="row">
+    <div class="col-sm-12">
+        {% if value == '' %}
+        <p>Welcome {{ nom }}</p>
+        <button class="btn btn-primary" id="start_game">Commencez</button>
+        {% else %}
+        <p>Welcome back {{ nom }} !!!!</p>
+        <div class="row">
+            <div class="col-sm-12">
+                <form id="level">
+                    <div class="row">
+                        <div class="col-10">
+                            <input class="form-control" type="text" name="level" placeholder="Quel niveau souhaitez-vous accèder ?">
+                            <p id="error"></p>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-primary" id="set-level">Next</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row inactive" id="game">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-12">
+                Vous avez 10 €, Très bien ! Installez vous SVP à la table de pari. <br>    
+                Le jeu commence, entrez votre mise : 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="mise" placeholder="ma mise">
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-primary">Miser</button>
+            </div>
+        </div>
+        <p>
+           
+        </p>
+    </div>
+
 </div>
 
 {% endblock %}
