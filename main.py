@@ -16,13 +16,18 @@ def input_with_timeout(prompt, timeout):
     raise TimeoutExpired
 
 
+filename = 'stat.csv'
+
 level = Niveau(1)
 name_user = input("Bonjour je suis Python. Quel est votre pseudo ? ")
 player = Player(level)
 player.nom = name_user
 
-print ("Hello " + player.nom + ", vous avez 10 €, Très bien ! Installez vous SVP à la table de pari.")
-regle="- Je viens de penser à un nombre entre 1 et 10. Devinez lequel ?\n\
+#Check if file exists
+player.open_file(filename)
+
+print ("Hello " + player.nom + ", vous avez " + str(player.solde)+ " €, Très bien ! Installez vous SVP à la table de pari.")
+regle="- Je viens de penser à un nombre entre 1 et " + str(player.level.get_level()*10) + ". Devinez lequel ?\n\
 - Att : vous avez le droit à trois essais !\n\
 - Si vous devinez mon nombre dès le premier coup, vous gagnez le double de votre mise !\n\
 - Si vous le devinez au 2è coup, vous gagnez exactement votre mise !\n\
@@ -37,80 +42,96 @@ jeu = True
 perdu = False
 
 while jeu:
+
+    player.mise = input("Le jeu commence, entrez votre mise : ? ")
+    while ( not level.mise_is_valid(player.mise, player.solde)):
+        player.mise = input("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et 10 € :  ? ")
+    
     nb_python = level.get_nb_python()
-    print(nb_python)
     nb_coup = level.get_nb_coup_max()
 
-    mise = input("Le jeu commence, entrez votre mise : ? ")
-    while ( not level.mise_is_valid(mise, player.solde)):
-        mise = input("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et 10 € :  ? ")
-    
-    mise=int(mise)
-    player.add_mise(mise)
-    player.set_solde(player.solde - mise)
+    player.mise = int(player.mise)
+    player.set_solde(player.solde - player.mise)
 
-    nb_user = input("Alors mon nombre est : ? " )
     essai = 1
-
-    test = level.nb_user_is_valid(nb_user)
-    print(nb_python)
-    while essai < nb_coup:
-        test = level.nb_user_is_valid(nb_user)
-        nb_user=int(nb_user)
+    exception = True
+   
+    print("nb_python : " + str(nb_python))
+    while essai <= nb_coup:
+        # TimeoutException
+        try:
+            player.nb_user = int(input_with_timeout("mon nombre est : ? ", 20-(5 * player.level.get_level()))) 
+        except TimeoutExpired:
+            print('\nVous avez mis trop de temps pour repondre, vous perdez un coup ...\n')
+            reste = nb_coup - essai
+            print("Il vous reste "+  str(reste) +" chance !")
+            essai += 1
+            continue
         
+        test = player.level.nb_user_is_valid(player.nb_user)        
         if test:            
-            if nb_user > nb_python:
+            player.nb_user = int(player.nb_user)
+            if player.nb_user > nb_python:
                 print("Votre nbre est trop grand !")
                 reste = nb_coup - essai
                 print("Il vous reste "+  str(reste) +" chance !")
                 essai += 1
 
-            elif nb_user < nb_python:
+            elif player.nb_user < nb_python:
                 print("Votre nbre est trop petit !")
                 reste = nb_coup - essai
                 print("Il vous reste "+ str(reste) +" chance !")
                 essai += 1
 
-            elif nb_user == nb_python:
-                gain = level.get_gain(mise, essai)
-                player.set_solde(player.solde + gain)
-                player.add_gain(gain)
+            elif player.nb_user == nb_python:
+                player.gain = level.get_gain(player.mise, essai)
+                print(player.gain)
+                player.set_solde(player.solde + player.gain)
+                print(player.solde)
 
-                print ("Bingo "+player.nom+", vous avez gagné en "+ str(essai) +" coup(s) et vous avez emporté "+ str(gain) +" € !")
+                print ("Bingo " + player.nom + ", vous avez gagné en "+ str(essai) +" coup(s) et vous avez emporté "+ str(player.gain) +" € !")
                 break
         else:
-            # nb_user = input("Je ne comprends pas ! Entrer SVP un nombre entre 1 et 10 :  ?")
+            nb_user = input("Je ne comprends pas ! Entrer SVP un nombre entre 1 et 10 :  ?")
             essai+=1
 
-        nb_user=input("Nombre ? ")
-
-
-    if nb_user != nb_python:
-        print("Vous avez perdu ! Mon nombre est "+ str(nb_python)+" !")
+    if player.nb_user != nb_python:
+        print("Vous avez perdu ! Mon nombre est "+ str(nb_python) +" !")
         perdu = True
 
-    continuer = input("Souhaitez-vous continuer la partie (O/N) ? ")
+    player.set_data_by_level(essai)    
+
+    continuer = "" 
+    # exception
+    try:
+        continuer = input_with_timeout("Souhaitez-vous continuer la partie (O/N) ? ", 10)
+    except TimeoutExpired:
+        jeu = False
+        break
 
     while True:
         if continuer == "O" or continuer == "o" :
-            if perdu and level.get_level() != 1:
-                level=Niveau(level.get_level() - 1)
+            if perdu and player.level.get_level() != 1:
+                player.level = Niveau(player.level.get_level() - 1)
                 break
-        
-            elif perdu and level.get_level() == 1:
-                level=Niveau(1)
+            elif perdu and player.level.get_level() == 1:
+                player.level = Niveau(1)
                 break
-
             else:
-                level=Niveau(level.get_level() + 1)
-            
+                player.level = Niveau(level.get_level() + 1)
+
+            level = Niveau(level.get_level() + 1)        
             player.set_level(level)
             break
+
         elif continuer == "N" or continuer == "n" :
-            print("Au revoir ! Vous finissez la partie avec "+ str(gain)+" €.")
+            print("Au revoir ! Vous finissez la partie avec "+ str(player.gain) +" €.")
             jeu = False
             player.set_level(level)
             break
-       
-        continuer = input("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?" )
-        continue
+        # exception
+        try:
+            continuer = input_with_timeout("Je ne comprends pas votre réponse. Souhaitez-vous continuer la partie (O/N) ?", 10)
+        except TimeoutExpired:
+            jeu = False
+            break 
