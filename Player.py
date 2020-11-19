@@ -17,7 +17,6 @@ class Player:
     """
 
     def __init__(self, level): # Notre méthode constructeur
-        self.id = 1
         self.nom = ""
         self.date = datetime.datetime.today()
         self.solde_depart = 10
@@ -66,7 +65,7 @@ class Player:
         if not path.exists(filename):
             with open(filename, 'w+') as stat_file:
                 fieldnames = [
-                    'id', 'date', 'nom', 'niveau', 'solde_depart', 'solde_fin', 'nb_coup', 'gain', 'mise', 
+                    'date', 'nom', 'niveau', 'solde_depart', 'solde_fin', 'nb_coup', 'gain', 'mise', 
                      ]
                 writer = csv.DictWriter(stat_file, fieldnames=fieldnames)
                 writer.writeheader()
