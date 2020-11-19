@@ -21,6 +21,7 @@ class Niveau:
 
     def set_nb_python(self,n):
         self.nb_python = n
+        
     def nb_user_is_valid(self, nombre):
         try:
             nombre = int(nombre)
