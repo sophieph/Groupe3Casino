@@ -22,27 +22,32 @@ class Niveau:
 
     def set_nb_python(self,n):
         self.nb_python = n
-
     def nb_user_is_valid(self, nombre):
-        if (type(nombre) == int):
-            if (nombre >=0 and nombre <= (self.level*10)):
+        try:
+            nombre = int(nombre)
+            if (nombre > 0 and nombre <= (self.level*10)):
                 return True
             else:
                 return False
-        else :
+        except ValueError:
             return False
 
     def nb_user_is_true(self, nb_user):
         return (self.nb_python == nb_user)
 
     def mise_is_valid(self, mise, solde):
-        if (type(mise) == int):
-            if (mise >=0 and mise <= solde):
-                return True
+        try:
+            mise = int(mise)
+            if (type(mise) == int):
+                if (mise > 0 and mise <= solde):
+                    return True
+                else:
+                    return False
             else:
                 return False
-        else:
+        except ValueError:
             return False
+        
     def get_nb_coup_max(self):
         if(self.level == 1):
             return 3
