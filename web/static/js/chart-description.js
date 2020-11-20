@@ -141,5 +141,11 @@ var victory3Chart = document.getElementById('victory-lvl3').getContext('2d');
 var chart4 = new Chart(victory3Chart, {
     type: 'pie',
     data: data3,
+    options: {
+        title: {
+            display: true,
+            text: '% victoire au niveau 3'
+        }
+    }
 });
 
