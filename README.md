@@ -1,22 +1,22 @@
 # Groupe3Casino
 ### Pré-requis
 
-* Installer les paquets suivants :
+Installer les paquets suivants :
 
 - pip install requests
 - pip install flask
 - pip install Pandas
 
-* Voici les fichiers à utiliser pour lancer le jeu du Casino :
+Voici les fichiers à utiliser pour lancer le jeu du Casino :
 - main.py
 - player.py
 - niveau.py
 
-* Voici le fichier des statistiques des joueurs:
+Voici le fichier des statistiques des joueurs:
 
 - stat.csv
 
-* Lancer l'application web du jeu :
+Lancer l'application web du jeu :
 
 - index.py
 ### TODO list 
