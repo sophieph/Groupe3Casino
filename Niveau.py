@@ -8,7 +8,7 @@ class Niveau:
 
     def __init__(self, level):
         self.level = level
-        self.nb_python = random.randrange(1, 10 * level)
+        self.nb_python = random.randrange(1, 10*level)
 
     def get_level(self):
         return self.level
@@ -21,7 +21,6 @@ class Niveau:
 
     def set_nb_python(self,n):
         self.nb_python = n
-        
     def nb_user_is_valid(self, nombre):
         try:
             nombre = int(nombre)
@@ -60,26 +59,26 @@ class Niveau:
     def get_gain(self, mise, nb_essai):
         if (self.level == 1):
             if (nb_essai == 1):
-                return 2 * mise
+                return 2*mise
             elif (nb_essai == 2):
                 return mise
             elif (nb_essai == 3):
                 return int(mise/2)
         elif(self.level == 2):
             if (nb_essai == 1):
-                return 2 * mise
+                return 2*mise
             elif (nb_essai == 2 or nb_essai == 3):
                 return mise
             elif (nb_essai == 4 or nb_essai == 5):
                 return int(mise/2)
         elif(self.level == 3):
             if (nb_essai == 1):
-                return 2 * mise
+                return 2*mise
             elif (nb_essai == 2 or nb_essai == 3 or nb_essai == 4):
                 return mise
             elif (nb_essai == 5 or nb_essai == 6 or nb_essai == 7):
                 return int(mise/2)
 
     def update_nb_python(self):
-        self.nb_python = random.randrange(1, 10 * self.level)
+        self.nb_python = random.randrange(1, 10*level)
 
