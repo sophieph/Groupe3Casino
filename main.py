@@ -79,9 +79,11 @@ choice_user = input("choix> ")
 
 jeu = choice(choice_user, player)
 
+if jeu:
+    print('Le jeu commence ')
+
 while jeu:
-    if (jeu):
-        player.mise = input("Le jeu commence, entrez votre mise : ? ")
+    player.mise = input("entrez votre mise : ? ")
     while ( not player.level.mise_is_valid(player.mise, player.solde)):
         player.mise = input("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et " + str(player.solde) + " € :  ? ")
         
