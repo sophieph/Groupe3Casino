@@ -8,16 +8,45 @@
     <div class="col-sm-6">
         <h2>Informations générales</h2>
         <ul>
-            <li></li>
+            <li><b>Niveau minimum atteint</b> : {{min}} </li>
+            <li><b>Niveau maximum atteint</b> : {{max}} </li>
+            <li><b>Mise moyenne </b>: {{mise_avg}}&euro;</li>
+            <li><b>Coup moyen par niveau</b> : <br>
+            {% for value in avgCoupArray %}
+                Niveau {{loop.index}} : {{value}} <br>
+            {% endfor %}
+            </li>
+            <li><b>Pourcentage de victoire/perte par niveau</b></li>
         </ul>
     </div>
     <div class="col-sm-3 charts-infos">
-        <!-- <canvas id="profit-level" width="400" height="400"></canvas> -->
+        <canvas id="victory-name" width="400" height="400"></canvas>
     </div>
     <div class="col-sm-3 charts-infos">
-        <!-- <canvas id="levels" width="400" height="400"></canvas> -->
+        <!-- VICTOIRE NIVEAU 1-->
+        <canvas id="victory-lvl1" width="400" height="400"></canvas>
+
+    </div>
+    <div class="col-sm-6">
+        
+    </div>
+    <div class="col-sm-3 charts-infos">
+        <canvas id="victory-lvl2" width="400" height="400"></canvas>
+    </div>
+    <div class="col-sm-3 charts-infos">
+        <!-- VICTOIRE NIVEAU 1-->
+        <canvas id="victory-lvl3" width="400" height="400"></canvas>
 
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+<script
+src="https://code.jquery.com/jquery-3.5.1.min.js"
+integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+crossorigin="anonymous"
+></script>
+<script src="/js/chart-description.js"></script>
+
 {% endblock %}
+
