@@ -1,98 +1,67 @@
-import csv
-from datetime import date
-import datetime
-import os.path
-from os import path
-import re
-from Niveau import Niveau
-
-
 # Class User 
+
 class Player: 
     """Classe définissant un joueur caractérisée par :
     - son nom
     - son solde de départ
-    - son solde actuel
-    - son niveau maximum atteint pendant le jeu  - Objet Niveau
-    """
+    - son solde de fin de jeu
+    - son niveau maximum atteint pendant le jeu 
+    - son lieu de résidence"""
 
-    def __init__(self, level): # Notre méthode constructeur
-        self.id = 1
+    
+    def __init__(self): # Notre méthode constructeur
         self.nom = ""
-        self.date = datetime.datetime.today()
-        self.solde_depart = 10
-        self.solde = 10
-        self.level = level
-        self.nb_user = 0
-        self.gain = 0
-        self.mise = 0
-        
+        self.solde_depart = ""
+        self.solde = ""
+        self.level = 1
 
     #Methode qui set le nom du joueur
-    def set_nom(self, nom):
+    def setNom(self, nom):
         self.nom = nom
 
         return self.nom
-    
+
     # Methode qui set le level du joueur
-    def set_level(self, level):
+    def setLevel(self, level):
         self.level = level
-
-        return self.level
-
-    def set_nb_user(self, nb_user):
-        self.nb_user = nb_user
-
-        return self.nb_user
-        
-    def set_mise(self, mise):
-        self.mise = mise
-        
-        return self.mise
     
-    def set_gain(self, gain):
-        self.gain = gain
-        
-        return self.gain
-
     # Methode qui set le solde de départ du joueur
-    def set_solde(self, solde):
-        self.solde = solde
+    def setSoldeDepart(self, solde):
+        error = "Le montant saisie n'est pas valide, solde minimum de 1€ requis : "
+        try:
+            solde = float(solde)
+            if solde < 1:
+                print(error)
+            else:
+                self.solde_depart = solde
+                self.solde = solde
 
-        return solde
+                return self.solde
+        except ValueError:
+            print(error)    
 
-    # Methode pour creer un fichier
-    def open_file(self, filename):
-        if not path.exists(filename):
-            with open(filename, 'w+') as stat_file:
-                fieldnames = [
-                    'id', 'date', 'nom', 'niveau', 'solde_depart', 'solde_fin', 'nb_coup', 'gain', 'mise', 
-                     ]
-                writer = csv.DictWriter(stat_file, fieldnames=fieldnames)
-                writer.writeheader()
-            
-    # Methode pour sauvegarder les donnees
-    def set_data_by_level(self, nb_coup):
-        with open('stat.csv', "a", encoding="utf-8") as stat_file:
-            stat_file.write(str(self.id) +
-             ',' + str(self.date) +
-              ',' + str(self.nom) + 
-              ','+ str(self.level.level) +
-               ','+ str(self.solde_depart) +
-                ','+ str(self.solde) +
-                ','+ str(nb_coup) +
-                 ','+ str(self.gain) + ','+ str(self.mise) + '\n')
+    # Methode qui retourne le solde selon la mise
+    def setSoldeAvecMise(self, mise):
+        mise_min = 0.01
+        try:
+            mise = float(mise)
+            if (mise < mise_min):
+                print(
+                    "Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et %.2f € :" % (self.solde))
+            elif mise > self.solde:
+                print("Erreur, votre mise est plus elevé que votre solde.\n")
+                print("Entrez une mise inférieur ou égale à %.2f € :" % (self.solde))
+            else: 
+                self.solde -= mise
+
+                return self.solde
+
+        except ValueError:
+            print("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et %.2f € : " % (self.solde))
+
+
+
+
 
     
-    # Methode si le joueur existe
-    def player_exists(self):
-        with open('stat_niveau.csv', "r", encoding="utf-8") as stat_file:
-            for line in stat_file:
-                match = re.search(self.nom, line)
-                if match:
-                    return True
-                else: 
-                    return False
 
-    #Methode qui decrit les stats du joueur
-    # def show_stat():

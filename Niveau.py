@@ -3,76 +3,44 @@ import random
 class Niveau:
     """ 
     - level 
+    - solde
     - nb_python
+    - nb_user
+    - mise
     """
 
-    def __init__(self, level):
+    def __init__(self, level, solde ):
         self.level = level
-        self.nb_python = random.randrange(1, 10*level)
+        self.nb_python = random.randrange(1, 10*level) 
+        
+    def set_nb_user(nombre):
+        if (nombre >=0 and nombre <= (self.level*10)):
+            self.nb_user = nombre
+            return True
+        else :
+            return False  
 
-    def get_level(self):
+    def set_mise(n,  solde):
+        if(n <= solde):
+            self.mise = n
+            return True
+        else :
+            return False
+
+    def nb_user_true():
+         return (self.nb_user == self.nb_python)
+
+    def get_level():
         return self.level
 
-    def get_nb_python(self):
-        return self.nb_python 
+    def get_solde():
+        return self.solde
 
-    def set_level(self, l):
-        self.level = l
+    def get_nb_python():
+        return self.nb_python
 
-    def set_nb_python(self, n):
-        self.nb_python = n
+    def get_nb_user():
+        return self.nb_user
 
-    def nb_user_is_valid(self, nombre):
-        try:
-            nombre = int(nombre)
-            if (nombre > 0 and nombre <= (self.level*10)):
-                return True
-            else:
-                return False
-            
-        except ValueError:
-            return False
-
-    def nb_user_is_true(self, nb_user):
-        return (self.nb_python == nb_user)
-
-    def mise_is_valid(self, mise, solde):
-        try:
-            mise = int(mise)
-            if (type(mise) == int):
-                if (mise > 0 and mise <= solde):
-                    return True
-                else:
-                    return False
-            else:
-                return False
-        except ValueError:
-            return False
-
-    def get_nb_coup_max(self, ):
-        if(self.level == 1):
-            return 3
-        elif (self.level == 2):
-            return 5
-        elif (self.level  == 3):
-            return 7
-
-    def get_gain(self, mise, nb_essai):
-        if (nb_essai == 1):
-            return 2*mise
-        elif (nb_essai == 2):
-            return mise
-        elif (nb_essai == 3):
-            return mise/2
-    def update_nb_python(self ):
-        self.nb_python = random.randrange(1, 10*self.level)
-
-    # def is_int(self, nombre):
-    #     try:
-    #         nombre = int(nombre)
-    #         if (nombre > 0):
-    #             return nombre
-    #         else:
-    #             return False
-    #     except ValueError:
-    #         return False
+    def get_mise():
+        return self.mise
