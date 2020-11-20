@@ -15,22 +15,33 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-def choice(value):
+def choice(value, player):
     if (value == "1"):
         return True
     elif (value == "2"):
-        print('nom :   ' + player.nom)
-        print('level : ' + str(player.level.get_level()))
-        print('solde : ' + str(player.solde))
-        print('gain  : ' + str(player.gain))
-        print('mise  : ' + str(player.mise))
-        #TODO : afficher statistiques avec bdd
+        if (player.player_exists()):
+            print('les statistiques du joueur : ' + player.nom)
+            print('la mise max : ' + str(player.get_mise_max(player.nom)))
+            print('la mise min : ' + str(player.get_mise_min(player.nom)))
+            print('la mise moyenne : ' + str(player.get_mise_moyenne(player.nom)))
+            print('le gain max : ' + str(player.get_gain_max(player.nom)))
+            print('le gain min : ' + str(player.get_gain_min(player.nom)))
+            print('le gain moyen : ' + str(player.get_gain_moyen(player.nom)))
+            print('le niveau max : ' + str(player.get_level_max(player.nom)))
+            print('le nombre de fois ou il a gagne du premier coup : ' + str(player.get_premier(player.nom)))
+            print('le nombre de fois ou il a gagne : ' + str(player.get_gagner(player.nom)))
+            print('le nombre de fois ou il a perdu : ' + str(player.get_perdre(player.nom)))
+        else:
+            print('Vous venez a peine d\'arriver, vous n\'avez pas de statistiques !')
         return True
     elif (value == "3"):
         print(regle)
         return True
     elif (value == "4"):
         print('Au revoir ! ')
+        return False
+    else: 
+        print('J\'ai pas compris la reponse, au revoir')
         return False
 
 
@@ -45,7 +56,7 @@ player.open_file(filename)
 print ("Hello " + player.nom + ", vous avez " + str(player.solde)+ " €, Très bien ! Installez vous SVP à la table de pari.")
 
 regle="- Je viens de penser à un nombre entre 1 et " + str(player.level.get_level() * 10) + ". Devinez lequel ?\n\
-- Att : vous avez le droit à trois essais !\n\
+- Att : vous avez le droit à 3 ( ou 5 ou 7 ) essais selon le niveau !\n\
 - Si vous devinez mon nombre dès le premier coup, vous gagnez le double de votre mise !\n\
 - Si vous le devinez au 2è coup, vous gagnez exactement votre mise !\n\
 - Si vous le devinez au 3è coup, vous gagnez la moitiè votre mise !\n\
@@ -57,21 +68,20 @@ regle="- Je viens de penser à un nombre entre 1 et " + str(player.level.get_lev
 jeu = None
 perdu = False
 menu = """
-    Menu du jeu : \n
-    \t 1) Lancer le jeu \n
-    \t 2) Afficher les informations de la session \n
-    \t 3) Afficher les règles \n
-    \t 4) Quitter
+Menu du jeu :
+\t1) Lancer le jeu
+\t2) Afficher les informations de la session
+\t3) Afficher les règles
+\t4) Quitter
 """
 print(menu)
-choice_user = input()
+choice_user = input("choix> ")
 
-jeu = choice(choice_user)
-
-if jeu:
-    player.mise = input("Le jeu commence, entrez votre mise : ? ")
+jeu = choice(choice_user, player)
 
 while jeu:
+    if (jeu):
+        player.mise = input("Le jeu commence, entrez votre mise : ? ")
     while ( not player.level.mise_is_valid(player.mise, player.solde)):
         player.mise = input("Le montant saisi n'est pas valide. Entrer SVP un montant entre 1 et " + str(player.solde) + " € :  ? ")
         

@@ -86,19 +86,124 @@ class Player:
     
     #Methode qui decrit les stats du joueur
     def player_exists(self):
-        with open('stat_niveau.csv', "r", encoding="utf-8") as stat_file:
+        with open('stat.csv', "r", encoding="utf-8") as stat_file:
             lines = stat_file.readlines()
-            tmp='2020-11-19 12:14:19.279433,a,-1,10,20,1,20,10'
-            tmp = tmp.split(',')
+            for i in lines:
+                if (self.nom in i):
+                    return True
+            return False
+
+    def get_stat(self, nom):
+        with open('stat.csv', "r", encoding="utf-8") as stat_file:
+            lines = stat_file.readlines()
+            tmp = []
             for line in lines:
-                tab = line.split(',')
-                match = re.search(self.nom, tab[1])
-                if match:
-                    match2 = re.search(self.level, tab[2])
-                    if match2: 
-                        if int(tab[4]) > int(tmp[4]):
-                            tmp = tab
-                else: 
-                    return False
-            
+                if(nom in line):
+                    tmp.append(line)
             return tmp
+
+    def get_mise_max(self, nom):
+        lines = self.get_stat(nom)
+        mises = []
+        for i in lines:
+            mises.append(i.split(','))
+        mise_max = int(mises[0][7])
+        for i in range(1, len(mises)):
+            if (mise_max < int(mises[i][7])):
+                mise_max = int(mises[i][7])
+        return mise_max
+
+    def get_mise_min(self, nom):
+        lines = self.get_stat(nom)
+        mises = []
+        for i in lines:
+            mises.append(i.split(','))
+        mise_max = int(mises[0][7])
+        for i in range(1, len(mises)):
+            if (mise_max > int(mises[i][7])):
+                mise_max = int(mises[i][7])
+        return mise_max
+    
+    def get_gain_max(self, nom):
+        lines = self.get_stat(nom)
+        gains = []
+        for i in lines:
+            gains.append(i.split(','))
+        gain_max = int(gains[0][6])
+        for i in range(1, len(gains)):
+            if (gain_max < int(gains[i][6])):
+                gain_max = int(gains[i][6])
+        return gain_max
+
+    def get_gain_min(self, nom):
+        lines = self.get_stat(nom)
+        gains = []
+        for i in lines:
+            gains.append(i.split(','))
+        gain_max = int(gains[0][6])
+        for i in range(1, len(gains)):
+            if (gain_max > int(gains[i][6])):
+                gain_max = int(gains[i][6])
+        return gain_max
+
+    def get_level_max(self, nom):
+        lines = self.get_stat(nom)
+        levels = []
+        for i in lines:
+            levels.append(i.split(','))
+        level_max = int(levels[0][2])
+        for i in range(1, len(levels)):
+            if (level_max < int(levels[i][2])):
+                level_max = int(levels[i][2])
+        return level_max
+    def get_premier(self, nom):
+        lines = self.get_stat(nom)
+        coups = []
+        for i in lines:
+            coups.append(i.split(','))
+        cpt = 0
+        for i in range(0, len(coups)):
+            if (1 == int(coups[i][5])):
+                cpt += 1
+        return cpt
+
+    def get_mise_moyenne(self, nom):
+        lines = self.get_stat(nom)
+        mises = [] 
+        for i in lines :
+            mises.append(i.split(','))
+        moy = 0
+        for i in range(0, len(mises)):
+            moy += int(mises[i][7]) 
+        return int(moy/len(mises))
+
+    def get_gain_moyen(self, nom):
+        lines = self.get_stat(nom)
+        gains = [] 
+        for i in lines :
+            gains.append(i.split(','))
+        moy = 0
+        for i in range(0, len(gains)):
+            moy += int(gains[i][6]) 
+        return int(moy/len(gains))
+    def get_gagner(self, nom):
+        lines = self.get_stat(nom)
+        tab = []
+        for i in lines:
+            tab.append(i.split(','))
+        cpt = 0
+        for i in range(0, len(tab)):
+            if ("False" in  tab[i][8]):
+                cpt += 1
+        return cpt
+
+    def get_perdre(self, nom):
+        lines = self.get_stat(nom)
+        tab = []
+        for i in lines:
+            tab.append(i.split(','))
+        cpt = 0
+        for i in range(0, len(tab)):
+            if ("True" in  tab[i][8]):
+                cpt += 1
+        return cpt

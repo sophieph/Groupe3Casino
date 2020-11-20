@@ -9,7 +9,6 @@ class Niveau:
     def __init__(self, level):
         self.level = level
         self.nb_python = random.randrange(1, 10*level)
-        print(self.nb_python)
 
     def get_level(self):
         return self.level
