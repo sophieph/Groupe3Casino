@@ -62,7 +62,6 @@ def dashboard_description(name):
     return render_template('dashboard-description.html', name=name)
 
 
-
 @app.route('/levels-avg', methods=['POST'])
 def levels_avg():
     data_df = pd.read_csv('stat.csv')
@@ -86,7 +85,15 @@ def winnings_avg():
     
     return json.dumps({'winnings':winningArray})
 
-
+@app.route('/victory-avg', methods=['POST'])
+def victory_avg():
+    data_df = pd.read_csv('stat.csv')
+    perdu = data_df['perdu'].astype('int64')
+    victory = perdu.value_counts(normalize=True)
+    victoryArray = []
+    for v in victory:
+        victoryArray.append(v)
+    return json.dumps({'victory':victoryArray})
 
 @app.route('/jeu')
 def jeu():
