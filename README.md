@@ -25,6 +25,7 @@ Lancer l'application web du jeu :
 * Ajouter d'autres niveaux de jeu
 * Prédire le prochain coup
 * Extraire le jeu en ligne 
+* Compléter les statistiques des joueurs 
 
 ## Auteurs
 * **Sophie PHOUANGSY** 
