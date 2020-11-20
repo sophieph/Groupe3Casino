@@ -58,10 +58,66 @@ def dashboard():
 @app.route('/dashboard/<name>')
 def dashboard_description(name):
     data_df = pd.read_csv('stat.csv')
+    name_df = data_df[data_df.nom == name]
+
+    min = name_df['niveau'].min()
+    max = name_df['niveau'].max() 
+    mise_moyenne = name_df['mise'].mean() 
+    avg_nb_coup_lvl_1 = name_df[name_df['niveau'] == 1]['nb_coup'].mean()
+    avg_nb_coup_lvl_2 = name_df[name_df['niveau'] == 2]['nb_coup'].mean()
+    avg_nb_coup_lvl_3 = name_df[name_df['niveau'] == 3]['nb_coup'].mean()
+    avgCoupArray = []
+    avgCoupArray.insert(1,avg_nb_coup_lvl_1)
+    avgCoupArray.insert(2,avg_nb_coup_lvl_2)
+    avgCoupArray.insert(3,avg_nb_coup_lvl_3)
+
+    return render_template('dashboard-description.html', name=name,
+     min=min, max=max, mise_avg=mise_moyenne, avgCoupArray=avgCoupArray)
+
+@app.route('/victory-avg/<name>', methods=['POST'])
+def victory_avg_by_name(name):
+    data_df = pd.read_csv('stat.csv')
+    name_df = data_df[data_df.nom == name]
+    victory = name_df['perdu'].value_counts(normalize=True)
+    victoryArray = []
+    for v in victory:
+        victoryArray.append(v)
     
-    return render_template('dashboard-description.html', name=name)
+    return json.dumps({'victory':victoryArray})
 
+@app.route('/victory/1/<name>', methods=['POST'])
+def victory_lvl1_by_name(name):
+    data_df = pd.read_csv('stat.csv')
+    name_df = data_df[data_df.nom == name]
 
+    victory = name_df[name_df['niveau'] == 1]['perdu'].value_counts(normalize=True)
+    victoryArray = []
+    for v in victory:
+        victoryArray.append(v)
+    
+    return json.dumps({'victory':victoryArray})
+
+@app.route('/victory/2/<name>', methods=['POST'])
+def victory_lvl2_by_name(name):
+    data_df = pd.read_csv('stat.csv')
+    name_df = data_df[data_df.nom == name]
+    victory = name_df[name_df['niveau'] == 2]['perdu'].value_counts(normalize=True)
+    victoryArray = []
+    for v in victory:
+        victoryArray.append(v)
+    
+    return json.dumps({'victory':victoryArray})
+
+@app.route('/victory/3/<name>', methods=['POST'])
+def victory_lvl3_by_name(name):
+    data_df = pd.read_csv('stat.csv')
+    name_df = data_df[data_df.nom == name]
+    victory = name_df[name_df['niveau'] == 3]['perdu'].value_counts(normalize=True)
+    victoryArray = []
+    for v in victory:
+        victoryArray.append(v)
+    
+    return json.dumps({'victory':victoryArray})        
 
 @app.route('/levels-avg', methods=['POST'])
 def levels_avg():
@@ -86,7 +142,15 @@ def winnings_avg():
     
     return json.dumps({'winnings':winningArray})
 
-
+@app.route('/victory-avg', methods=['POST'])
+def victory_avg():
+    data_df = pd.read_csv('stat.csv')
+    perdu = data_df['perdu'].astype('int64')
+    victory = perdu.value_counts(normalize=True)
+    victoryArray = []
+    for v in victory:
+        victoryArray.append(v)
+    return json.dumps({'victory':victoryArray})
 
 @app.route('/jeu')
 def jeu():

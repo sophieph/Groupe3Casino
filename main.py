@@ -32,7 +32,7 @@ def choice(value, player):
             print('le nombre de fois ou il a gagne : ' + str(player.get_gagner(player.nom)))
             print('le nombre de fois ou il a perdu : ' + str(player.get_perdre(player.nom)))
         else:
-            print('Vous venez a peine d\'arriver, vous n\'avez pas de statistiques !')
+            print('Vous venez à peine d\'arriver, vous n\'avez pas de statistiques !')
         return True
     elif (value == "3"):
         print(regle)
