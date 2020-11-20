@@ -125,7 +125,7 @@ while jeu:
             perdu = True
             
 
-    player.set_data_by_level(essai)
+    player.set_data_by_level(essai, perdu)
 
     # si le joueur arrive au max level sans perdre
     if player.level.level == 3 and perdu == False:

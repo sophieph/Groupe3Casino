@@ -65,13 +65,13 @@ class Player:
         if not path.exists(filename):
             with open(filename, 'w+') as stat_file:
                 fieldnames = [
-                    'date', 'nom', 'niveau', 'solde_depart', 'solde_fin', 'nb_coup', 'gain', 'mise', 
+                    'date', 'nom', 'niveau', 'solde_depart', 'solde_fin', 'nb_coup', 'gain', 'mise', 'perdu'
                      ]
                 writer = csv.DictWriter(stat_file, fieldnames=fieldnames)
                 writer.writeheader()
             
     # Methode pour sauvegarder les donnees
-    def set_data_by_level(self, nb_coup):
+    def set_data_by_level(self, nb_coup, perdu):
         with open('stat.csv', "a", encoding="utf-8") as stat_file:
             stat_file.write(str(self.date) +
                 ','+ str(self.nom) + 
@@ -80,7 +80,8 @@ class Player:
                 ','+ str(self.solde) +
                 ','+ str(nb_coup) +
                 ','+ str(self.gain) + 
-                ','+ str(self.mise) + '\n')
+                ','+ str(self.mise) +
+                ','+ str(perdu) + '\n')
 
     
     #Methode qui decrit les stats du joueur

@@ -1,29 +1,26 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 
-<h2> Dashboard
-</h2>
+<h2>Dashboard</h2>
 
 <div class="row">
-    <div class="col-sm-6">
-        <h2>Liste des joueurs existants</h2>
-        <ul>
-            {% for name in names %}
-                <li><a href="">{{ name }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="col-sm-3">
-        <canvas id="profit-level" width="400" height="400"></canvas>
-    </div>
-    <div class="col-sm-3">
-        <canvas id="levels" width="400" height="400"></canvas>
-
-    </div>
+  <div class="col-sm-6">
+    <h2>Liste des joueurs existants</h2>
+    <ul>
+      {% for name in names %}
+      <li>
+        <a href="{{ url_for('dashboard_description', name=name) }}"
+          >{{ name }}</a
+        > 
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="col-sm-3 charts-infos">
+    <canvas id="profit-level" width="400" height="400"></canvas>
+  </div>
+  <div class="col-sm-3">
+    <canvas id="levels" width="400" height="400"></canvas>
+  </div>
 </div>
 
 {% endblock %}
-
-<script>
-    
-    </script>

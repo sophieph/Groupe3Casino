@@ -10,3 +10,7 @@
     display:none;
     opacity:0.3;
 }
+
+.charts-infos {
+    border-radius: 35px;
+    border: 1px solid #f0f0f0;
