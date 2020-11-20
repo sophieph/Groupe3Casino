@@ -55,6 +55,14 @@ def dashboard():
 
     return render_template('dashboard.html', names=names, levels=levels)
 
+@app.route('/dashboard/<name>')
+def dashboard_description(name):
+    data_df = pd.read_csv('stat.csv')
+    
+    return render_template('dashboard-description.html', name=name)
+
+
+
 @app.route('/levels-avg', methods=['POST'])
 def levels_avg():
     data_df = pd.read_csv('stat.csv')
