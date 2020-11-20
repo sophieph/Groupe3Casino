@@ -1,0 +1,6 @@
+date,nom,niveau,solde_depart,solde_fin,nb_coup,gain,mise,perdu
+11/20/2020 05:37:24,fatima,1,10,15,1,10,5,False
+11/20/2020 05:37:24,fatima,2,10,15,3,2,2,False
+11/20/2020 05:37:24,fatima,3,10,13,8,0,2,True
+11/20/2020 05:37:24,fatima,2,10,14,1,2,1,False
+11/20/2020 05:41:09,fatima,1,10,10,2,5,5,False
